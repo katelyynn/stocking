@@ -29,6 +29,10 @@ async function retrieve_stock() {
     // this references the function in main.py
     stocking = await eel.get_now_playing()();
     console.log(stocking);
+
+
+    // update play/pause
+    document.getElementById('action-play-pause').setAttribute('data-type',stocking.status.state);
 }
 
 

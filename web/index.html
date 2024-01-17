@@ -26,7 +26,46 @@
     <script src="https://unpkg.com/tippy.js@6" defer></script>
 </head>
 <body>
+    <nav></nav>
+    <main class="cards">
+        <section class="main cards">
+            <section class="card">
+                <h3 class="head">stocking player</h3>
+                <p>stuff will go here soon</p>
+            </section>
+        </section>
+        <section class="side cards">
 
+        </section>
+    </main>
+    <footer class="player">
+        <ul class="actions left">
+            <button class="prev" onclick="player_prev()">
+                <i class="icon w-16" data-lucide="skip-back"></i>
+            </button>
+            <button class="play-pause" id="action-play-pause" data-type="Paused" onclick="player_toggle_play()">
+                <i class="icon w-16 playing" fill="currentColor" data-lucide="pause"></i>
+                <i class="icon w-16 paused" data-lucide="play"></i>
+            </button>
+            <button class="next" onclick="player_next()">
+                <i class="icon w-16" data-lucide="skip-forward"></i>
+            </button>
+            <!-- -->
+            <button class="shuffle" id="action-shuffle" data-type="none" onclick="player_toggle_shuffle()">
+                <i class="icon w-16" data-lucide="shuffle"></i>
+            </button>
+            <button class="loop" id="action-loop" data-type="none" onclick="player_toggle_loop()">
+                <i class="icon w-16 none" data-lucide="repeat"></i>
+                <i class="icon w-16 once" data-lucide="repeat-1"></i>
+            </button>
+        </ul>
+        <ul class="player-bar middle">
+
+        </ul>
+        <ul class="actions right">
+
+        </ul>
+    </footer>
 </body>
 <script>
     lucide.createIcons();

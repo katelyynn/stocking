@@ -225,23 +225,98 @@ input, select, textarea {
     gap: var(--card-gap);
 }
 
-.card {
+.card, footer {
     background-color: hsl(var(--b5));
     border: 1px solid hsl(var(--b4));
     border-radius: var(--card-radius);
     box-shadow: var(--card-shadow);
     padding: var(--card-padding);
 
+    display: flex;
+    flex-direction: column;
     flex-shrink: 0;
+    flex: 1;
 
     transition-property: background-color, border;
     transition-duration: calc(var(--trans) * 7);
     transition-timing-function: var(--trans-function);
 }
 
-.card.main {
+.main {
     width: var(--cards-main-width);
 }
-.card.side {
+.side {
     width: var(--cards-sidebar-width);
+}
+
+
+
+
+/*     TEXT     */
+h1 {
+    font-size: 30px;
+    line-height: 34px;
+    font-weight: 600;
+    color: hsl(var(--c1));
+}
+h2 {
+    font-size: 24px;
+    line-height: 26px;
+    font-weight: 600;
+    color: hsl(var(--c1));
+}
+
+h3 {
+    font-weight: 500;
+    color: hsl(var(--c1));
+}
+
+.head {
+    margin-bottom: 12px;
+}
+
+
+.w-16 {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5px;
+}
+
+
+
+
+/*     PLAYER     */
+footer {
+    position: absolute;
+    width: calc(var(--cards-width) + (var(--card-gap) * 2));
+    bottom: var(--card-gap);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    box-shadow: var(--menu-shadow);
+
+    flex-direction: row;
+}
+
+footer .actions {
+    display: flex;
+    gap: 4px;
+}
+
+/*footer button {
+    --padding: 7px;
+}*/
+
+footer .shuffle {
+    margin-left: calc(var(--card-gap) - 4px);
+}
+
+
+/* play/pause */
+.play-pause[data-type='Paused'] .playing,
+.play-pause[data-type='Playing'] .paused
+{
+    display: none;
 }
