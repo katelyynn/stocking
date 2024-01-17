@@ -1,0 +1,247 @@
+/* stocking */
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@100;200;300;400;500;600;700&display=swap');
+
+
+:root {
+    --hue: var(--base-hue, 255);
+    --sat: var(--saturation, 1);
+    --lit: var(--lightness, 1);
+    --ovr: var(--invert-btn, var(--b7));
+
+    --font: /*Spline Sans ALT, */IBM Plex Sans, IBM Plex Sans JP, Spline Sans, Inter, Roboto, Noto Sans, Noto Sans JP, sans-serif;
+    --font-code: Spline Sans Mono, Iosevka, JetBrains Mono, Roboto Mono, monospace;
+    --font-size: 14px;
+    --line-height: calc(var(--font-size) + 4px);
+
+    --font-weight: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 500;
+
+    --trans: 0.15s;
+    --trans-function: cubic-bezier(.25,.75,.5,1.25);
+}
+
+/* backgrounds */
+:root,
+button
+{
+    /* any additional highlights */
+    --b3: var(--hue), calc(var(--sat) * 6%), 28%;
+
+    /* card border */
+    --b4: var(--hue), calc(var(--sat) * 8%), 22%;
+
+    /* card */
+    --b5: var(--hue), calc(var(--sat) * 9%), 15%;
+
+    /* root */
+    --b6: var(--hue), calc(var(--sat) * 12%), 10%;
+    --b7: 0, 0%, 0%;
+}
+
+/* text */
+:root,
+button,
+.sc-ministats-reposts
+{
+    --c1: var(--hue), calc(var(--sat) * 40%), 100%;
+    --c2: var(--hue), calc(var(--sat) * 60%), 90%;
+    --c3: var(--hue), calc(var(--sat) * 10%), 60%;
+    --ov-c1: var(--c1);
+
+    --l2: var(--hue), calc(var(--sat) * 50%), calc(var(--lit) * 83%);
+    --l3: var(--hue), calc(var(--sat) * 60%), calc(var(--lit) * 70%);
+    --l4: var(--hue), calc(var(--sat) * 70%), calc(var(--lit) * 50%);
+
+    --l2-c: var(--hue), calc(var(--sat) * 50%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 83%);
+    --l3-c: var(--hue), calc(var(--sat) * 60%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 70%);
+    --l4-c: var(--hue), calc(var(--sat) * 70%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 50%);
+
+    --h2: var(--l2-c);
+    --h3: var(--l3-c);
+    --h4: var(--l4-c);
+
+    --icon: var(--c2);
+}
+
+/* attributes */
+:root {
+    --card-padding: 20px;
+    --card-radius: 8px;
+    --card-shadow: hsla(var(--b7), 0.25) 0 2px 4px 0;
+    --card-gap: 15px;
+
+    --cards-main-width: 843px; /* this makes it not 777, the grid looks better okay */
+    --cards-sidebar-width: 400px;
+    --cards-width: calc(var(--cards-main-width) + var(--cards-sidebar-width) + var(--card-gap));
+
+    --item-small-radius: 4px;
+    --item-med-radius: 6px;
+    --item-big-radius: 9px;
+
+    --profile-header-avatar-size: 96px;
+    --profile-header-avatar-small-size: 54px;
+    --profile-header-background-height: 200px;
+    --profile-header-background-offset: 33%;
+
+    --shout-avatar-size: 52px;
+    --shout-inset: 52px;
+
+    --menu-shadow: 2px 2px 24px 0 hsla(var(--b7), 0.35), 3px 6px 48px 16px hsla(var(--b7), 0.25);
+
+    --noise: url('../img/noise.png');
+
+    --interact-shadow: hsla(var(--b7), 0.1) 0 2px 4px 0;
+}
+
+
+body {
+    background-color: hsl(var(--b6));
+    color: hsl(var(--c2));
+    font-family: var(--font);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    font-weight: var(--font-weight);
+    color-scheme: dark;
+    accent-color: hsl(var(--l3-c));
+    transition-property: background-color;
+    transition-duration: calc(var(--trans) * 7);
+    transition-timing-function: var(--trans-function);
+}
+
+b, strong {
+    font-weight: 500;
+}
+
+
+
+
+/*     BUTTON     */
+button {
+    --bg: hsl(var(--b4));
+    --bg-hov: hsla(var(--b4), 80%);
+    --bg-atv: hsla(var(--b4), 60%);
+    --col: hsl(var(--c2));
+    --col-hov: var(--col);
+
+    background-color: var(--bg);
+    color: var(--col);
+    padding: var(--padding, 7px 12px);
+    min-height: 32px;
+    min-width: 32px;
+    font-weight: var(--force-font-weight, var(--font-weight-medium));
+    border-radius: var(--radius, var(--item-med-radius));
+    box-shadow: var(--shadow, var(--interact-shadow));
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    border: unset;
+    appearance: unset;
+
+    transition-property: background-color, transform, box-shadow, color, opacity;
+    transition-duration: var(--trans);
+    transition-timing-function: var(--trans-function);
+}
+button:hover {
+    background-color: var(--bg-hov);
+    color: var(--col-hov);
+}
+button:active {
+    background-color: var(--bg-atv);
+    transform: scale(0.98);
+}
+button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+/*     PRIMARY     */
+.primary {
+    --bg: hsl(var(--h3));
+    --bg-hov: hsla(var(--h3), 80%);
+    --bg-atv: hsla(var(--h3), 60%);
+    --col: hsl(var(--ovr, var(--b7)));
+}
+
+
+/*     SIDE NAV     */
+.nav-item {
+    --bg: transparent;
+    --bg-hov: hsla(var(--b4), 60%);
+    --bg-atv: hsla(var(--b4), 80%);
+    --shadow: none;
+}
+
+
+
+
+/*     INPUT     */
+input, select, textarea {
+    --bg: hsl(var(--b4));
+    --bg-hov: hsla(var(--b4), 80%);
+    --bg-atv: hsla(var(--b4), 60%);
+    --col: hsl(var(--c2));
+    --col-hov: var(--col);
+
+    background-color: var(--bg);
+    color: var(--col);
+    padding: var(--padding, 7px 12px);
+    min-height: 32px;
+    min-width: 32px;
+    font-weight: var(--force-font-weight, var(--font-weight-medium));
+    border-radius: var(--radius, var(--item-med-radius));
+    box-shadow: var(--shadow, var(--interact-shadow));
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    border: unset;
+    appearance: unset;
+
+    transition-property: background-color, transform, box-shadow, color, opacity;
+    transition-duration: var(--trans);
+    transition-timing-function: var(--trans-function);
+}
+:is(input, select, textarea):hover {
+    background-color: var(--bg-hov);
+    color: var(--col-hov);
+}
+:is(input, select, textarea):active {
+    background-color: var(--bg-atv);
+}
+
+
+
+
+/*     CARDS     */
+.cards {
+    display: flex;
+    gap: var(--card-gap);
+}
+
+.card {
+    background-color: hsl(var(--b5));
+    border: 1px solid hsl(var(--b4));
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    padding: var(--card-padding);
+
+    flex-shrink: 0;
+
+    transition-property: background-color, border;
+    transition-duration: calc(var(--trans) * 7);
+    transition-timing-function: var(--trans-function);
+}
+
+.card.main {
+    width: var(--cards-main-width);
+}
+.card.side {
+    width: var(--cards-sidebar-width);
+}
