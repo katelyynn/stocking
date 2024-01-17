@@ -298,6 +298,7 @@ footer {
     box-shadow: var(--menu-shadow);
 
     flex-direction: row;
+    gap: calc(var(--card-gap) * 3);
 }
 
 footer .actions {
@@ -305,9 +306,9 @@ footer .actions {
     gap: 4px;
 }
 
-/*footer button {
+footer button {
     --padding: 7px;
-}*/
+}
 
 footer .shuffle {
     margin-left: calc(var(--card-gap) - 4px);
@@ -316,7 +317,22 @@ footer .shuffle {
 
 /* play/pause */
 .play-pause[data-type='Paused'] .playing,
+.play-pause[data-type='Stopped'] .playing,
 .play-pause[data-type='Playing'] .paused
 {
     display: none;
+}
+
+
+
+
+footer .player-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--card-gap);
+    flex: 1;
+}
+
+footer .player-bar .bar {
+    flex: 1;
 }

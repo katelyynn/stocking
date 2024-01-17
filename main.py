@@ -44,6 +44,10 @@ def get_now_playing():
     print (send)
     return send
 
+@eel.expose()
+def player_toggle_play():
+    mb.play_pause()
+
 #async def main():
 #    await get_now_playing();
 

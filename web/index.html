@@ -43,7 +43,7 @@
             <button class="prev" onclick="player_prev()">
                 <i class="icon w-16" data-lucide="skip-back"></i>
             </button>
-            <button class="play-pause" id="action-play-pause" data-type="Paused" onclick="player_toggle_play()">
+            <button class="play-pause" id="action-play-pause" data-type="Paused" onclick="eel.player_toggle_play()">
                 <i class="icon w-16 playing" fill="currentColor" data-lucide="pause"></i>
                 <i class="icon w-16 paused" data-lucide="play"></i>
             </button>
@@ -60,10 +60,16 @@
             </button>
         </ul>
         <ul class="player-bar middle">
-
+            <p class="current-time" id="current-time">0:00</p>
+            <div class="bar">
+                <div class="fill" id="bar-fill"></div>
+            </div>
+            <p class="duration" id="duration">0:00</p>
         </ul>
         <ul class="actions right">
-
+            <button class="love" onclick="player_toggle_love()">
+                <i class="icon w-16" data-lucide="heart"></i>
+            </button>
         </ul>
     </footer>
 </body>
