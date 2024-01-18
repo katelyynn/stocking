@@ -130,6 +130,8 @@ async function get_library(artist) {
     current_library = await eel.get_artist_library(artist)();
     console.log(current_library);
 
+    document.getElementById('library-grid-items').innerHTML = '';
+
     // show albums
     for (let album in current_library) {
         document.getElementById('library-grid-items').appendChild(create_album(album));
@@ -149,6 +151,33 @@ function create_album(album) {
     `);
 
     return em_album;
+}
+
+
+// show album
+function view_album(album) {
+    document.getElementById('album-title').setContent = album;
+    document.getElementById('album-tracklist').innerHTML = '';
+
+    for (let track in current_library[album]) {
+        document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track]));
+    }
+}
+
+
+// create track in tracklist
+function create_track(track) {
+    let em_track = document.createElement('li');
+    em_track.classList.add('track-item');
+    em_track.innerHTML = (`
+    <p class="position">${track.position}</p>
+    <div class="details">
+        <p class="track">${track.title}</p>
+        <p class="artist">${parse_artists(track.artist, track.guests)}</p>
+    </div>
+    `);
+
+    return em_track;
 }
 
 

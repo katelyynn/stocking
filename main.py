@@ -104,16 +104,20 @@ def get_artist_library(artist=''):
 def parse_file(rawrr,include_album=True):
     if include_album:
         return {
+            'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
-            'album': mb.library_get_file_tag(rawrr,MBMD_Album)
+            'album': mb.library_get_file_tag(rawrr,MBMD_Album),
+            'rawr': rawrr
         }
     else:
         return {
+            'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
-            'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole)
+            'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
+            'rawr': rawrr
         }
 
 #async def main():
