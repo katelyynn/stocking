@@ -354,7 +354,18 @@ footer .player-bar .bar {
 
 footer .track-info {
     min-width: 300px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+footer .track-info .artist {
+    font-size: calc(var(--font-size) - 2px);
+    line-height: calc(var(--line-height) - 4px);
+}
+footer .track-info .artwork {
+    --w: 32px;
+    display: flex;
+    align-items: center;
 }
 
 
@@ -366,4 +377,13 @@ footer .track-info {
 }
 .artist {
     color: hsl(var(--c3));
+}
+
+.artwork img {
+    width: var(--w);
+    height: var(--w);
+    border: 1px solid hsl(var(--b4));
+    border-radius: var(--item-med-radius);
+    box-shadow: var(--interact-shadow);
+    box-sizing: border-box;
 }

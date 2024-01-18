@@ -16,19 +16,20 @@ init()
 mb = MusicBeeIPC()
 
 last_known_artwork = ''
+last_known_b64 = ''
 
 @eel.expose()
 def get_now_playing():
     global last_known_artwork
+    global last_known_b64
     #print(f"{Back.RED}{Style.BRIGHT}{mb.get_file_tag(MBMD_Artist)}{Style.RESET_ALL} {Back.BLUE}{Style.BRIGHT}{mb.get_file_tag(MBMD_TrackTitle)}{Style.RESET_ALL} {Back.YELLOW}{Style.BRIGHT}{mb.get_file_tag(MBMD_Album)}{Style.RESET_ALL}")
     #print(f"{Back.GREEN}{Style.BRIGHT}{mb.get_play_state_str()}{Style.RESET_ALL} / Time: {mb.get_position()} of {mb.get_duration()}")
 
     temp_artwork = mb.get_artwork_url()
-    encoded_image = 'stocking'
 
     if last_known_artwork != temp_artwork:
         with open(temp_artwork, 'rb') as image:
-            encoded_image = base64.b64encode(image.read())
+            last_known_b64 = base64.b64encode(image.read()).decode("utf-8")
         last_known_artwork = temp_artwork
 
     send = {
@@ -42,7 +43,7 @@ def get_now_playing():
             'album': {
                 'title': mb.get_file_tag(MBMD_Album),
                 'artist': mb.get_file_tag(MBMD_AlbumArtist),
-                'cover': encoded_image
+                'cover': last_known_b64
             }
         },
         'status': {
