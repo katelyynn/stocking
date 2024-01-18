@@ -146,6 +146,7 @@ button {
     padding: var(--padding, 7px 12px);
     min-height: 32px;
     min-width: 32px;
+    font-family: var(--font);
     font-weight: var(--force-font-weight, var(--font-weight-medium));
     border-radius: var(--radius, var(--item-med-radius));
     box-shadow: var(--shadow, var(--interact-shadow));
@@ -252,6 +253,9 @@ main {
 .cards {
     display: flex;
     gap: var(--card-gap);
+}
+.cards > .cards {
+    flex-direction: column;
 }
 
 .card, footer {
@@ -469,4 +473,30 @@ footer .track-info .artwork {
 }
 .tippy-arrow {
     display: none;
+}
+
+
+
+
+/*     ALBUM GRID     */
+.album-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.album-grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    --padding: 0;
+    --radius: 0;
+    --bg: transparent;
+    --bg-hov: transparent;
+    --bg-atv: transparent;
+}
+
+.album-grid-item .details {
+    display: flex;
+    flex-direction: column;
 }

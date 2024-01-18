@@ -124,4 +124,32 @@ function parse_artists(artist,guests) {
 }
 
 
+// get library
+let current_library = {};
+async function get_library(artist) {
+    current_library = await eel.get_artist_library(artist)();
+    console.log(current_library);
+
+    // show albums
+    for (let album in current_library) {
+        document.getElementById('library-grid-items').appendChild(create_album(album));
+    }
+}
+
+
+// create album
+function create_album(album) {
+    console.log(album)
+
+    let em_album = document.createElement('button');
+    em_album.classList.add('album-grid-item');
+    em_album.setAttribute('onclick',`view_album('${album}')`);
+    em_album.innerHTML = (`
+    ${album}
+    `);
+
+    return em_album;
+}
+
+
 setInterval(retrieve_stock,stocking_timeout);

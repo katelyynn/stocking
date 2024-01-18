@@ -91,29 +91,29 @@ def get_artist_library(artist=''):
     meow = {}
 
     for item in rawr:
-        album = mb.library_get_file_tag(rawr[item],MBMD_Album)
+        album = mb.library_get_file_tag(item,MBMD_Album)
         if album not in meow:
             meow[album] = []
 
-        meow[album].append(parse_file(rawr,False))
+        meow[album].append(parse_file(item,False))
 
     return meow
 
 
 @eel.expose()
-def parse_file(rawr,include_album=True):
+def parse_file(rawrr,include_album=True):
     if include_album:
         return {
-            'title': mb.library_get_file_tag(rawr,MBMD_TrackTitle),
-            'artist': mb.library_get_file_tag(rawr,MBMD_Artist),
-            'guests': mb.library_get_file_tag(rawr,MBMD_ArtistsWithGuestRole),
-            'album': mb.library_get_file_tag(rawr,MBMD_Album)
+            'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
+            'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
+            'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
+            'album': mb.library_get_file_tag(rawrr,MBMD_Album)
         }
     else:
         return {
-            'title': mb.library_get_file_tag(rawr,MBMD_TrackTitle),
-            'artist': mb.library_get_file_tag(rawr,MBMD_Artist),
-            'guests': mb.library_get_file_tag(rawr,MBMD_ArtistsWithGuestRole)
+            'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
+            'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
+            'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole)
         }
 
 #async def main():
