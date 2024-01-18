@@ -6,11 +6,13 @@ let stocking = {
         track: {
             title: '',
             artist: '',
-            guests: ''
+            guests: '',
+            loved: false
         },
         album: {
             title: '',
-            artist: ''
+            artist: '',
+            cover: ''
         }
     },
     status: {
@@ -33,6 +35,14 @@ async function retrieve_stock() {
 
     // update play/pause
     document.getElementById('action-play-pause').setAttribute('data-type',stocking.status.state);
+
+    // update track info
+    document.getElementById('artwork').setAttribute('src',`data:image/png;base64,${stocking.file.album.cover}`);
+    document.getElementById('track').textContent = stocking.file.track.title;
+    document.getElementById('artist').textContent = stocking.file.track.artist;
+
+    // update loved
+    document.getElementById('action-love').setAttribute('data-type',stocking.file.track.loved);
 
 
     // update time

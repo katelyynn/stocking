@@ -25,7 +25,7 @@
 
 /* backgrounds */
 :root,
-button
+.primary
 {
     /* any additional highlights */
     --b3: var(--hue), calc(var(--sat) * 6%), 28%;
@@ -43,8 +43,7 @@ button
 
 /* text */
 :root,
-button,
-.sc-ministats-reposts
+button
 {
     --c1: var(--hue), calc(var(--sat) * 40%), 100%;
     --c2: var(--hue), calc(var(--sat) * 60%), 90%;
@@ -166,6 +165,11 @@ button:disabled {
     --bg-hov: hsla(var(--h3), 80%);
     --bg-atv: hsla(var(--h3), 60%);
     --col: hsl(var(--ovr, var(--b7)));
+}
+
+
+.love {
+    --col: hsl(var(--l3-c));
 }
 
 
@@ -303,6 +307,7 @@ footer {
 
 footer .actions {
     display: flex;
+    align-items: center;
     gap: 4px;
 }
 
@@ -323,6 +328,15 @@ footer .shuffle {
     display: none;
 }
 
+.love {
+    --hue: -2;
+    --sat: 1;
+    --lit: 1;
+}
+.love[data-type="true"] svg {
+    fill: currentColor;
+}
+
 
 
 
@@ -335,4 +349,21 @@ footer .player-bar {
 
 footer .player-bar .bar {
     flex: 1;
+}
+
+
+footer .track-info {
+    min-width: 300px;
+    text-align: center;
+}
+
+
+
+
+/*     GENERAL TRACK STUFF     */
+.track {
+    color: hsl(var(--c2));
+}
+.artist {
+    color: hsl(var(--c3));
 }

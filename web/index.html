@@ -40,14 +40,14 @@
     </main>
     <footer class="player">
         <ul class="actions left">
-            <button class="prev" onclick="player_prev()">
+            <button class="prev" onclick="eel.player_prev()">
                 <i class="icon w-16" data-lucide="skip-back"></i>
             </button>
             <button class="play-pause" id="action-play-pause" data-type="Paused" onclick="eel.player_toggle_play()">
                 <i class="icon w-16 playing" fill="currentColor" data-lucide="pause"></i>
                 <i class="icon w-16 paused" data-lucide="play"></i>
             </button>
-            <button class="next" onclick="player_next()">
+            <button class="next" onclick="eel.player_next()">
                 <i class="icon w-16" data-lucide="skip-forward"></i>
             </button>
             <!-- -->
@@ -66,8 +66,17 @@
             </div>
             <p class="duration" id="duration">0:00</p>
         </ul>
+        <div class="track-info">
+            <div class="artwork">
+                <img id="artwork">
+            </div>
+            <div class="info">
+                <p class="track" id="track"></p>
+                <p class="artist" id="artist"></p>
+            </div>
+        </div>
         <ul class="actions right">
-            <button class="love" onclick="player_toggle_love()">
+            <button class="love" id="action-love" onclick="player_toggle_love()">
                 <i class="icon w-16" data-lucide="heart"></i>
             </button>
         </ul>
