@@ -86,6 +86,10 @@ def player_next():
     mb.next_track()
 
 @eel.expose()
+def play_track(rawr):
+    mb.play_now(rawr)
+
+@eel.expose()
 def get_artist_library(artist=''):
     rawr = mb.library_search(query=artist,fields=['ArtistPeople'])
     meow = {}
@@ -107,6 +111,7 @@ def parse_file(rawrr,include_album=True):
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
+            'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr
@@ -116,6 +121,7 @@ def parse_file(rawrr,include_album=True):
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
+            'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
             'rawr': rawrr
         }

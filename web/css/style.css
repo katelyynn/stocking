@@ -124,6 +124,9 @@ body {
     transition-timing-function: var(--trans-function);
 
     cursor: default;
+
+    /* footer */
+    padding-bottom: 104px;
 }
 
 b, strong {
@@ -299,16 +302,24 @@ main {
 
 /*     TEXT     */
 h1 {
-    font-size: 30px;
-    line-height: 34px;
+    font-size: 26px;
+    line-height: 30px;
     font-weight: 600;
     color: hsl(var(--c1));
 }
 h2 {
-    font-size: 24px;
-    line-height: 26px;
+    font-size: 20px;
+    line-height: 24px;
     font-weight: 600;
     color: hsl(var(--c1));
+}
+
+#album-title {
+    margin-bottom: 2px;
+}
+#album-artist-title {
+    margin-bottom: var(--card-gap);
+    color: hsl(var(--c2));
 }
 
 h3 {
@@ -332,7 +343,7 @@ h3 {
 
 /*     PLAYER     */
 footer {
-    position: absolute;
+    position: fixed;
     width: calc(var(--cards-width) + (var(--card-gap) * 2));
     /* the artist and title combo makes it taller */
     padding: calc(var(--card-padding) - 2px) var(--card-padding);
@@ -499,4 +510,41 @@ footer .track-info .artwork {
 .album-grid-item .details {
     display: flex;
     flex-direction: column;
+}
+
+
+
+
+/*     TRACKLIST     */
+.track-item {
+    --bg: transparent;
+    --bg-hov: hsla(var(--b4), 80%);
+    padding: 5px 12px;
+    background-color: var(--bg);
+    color: var(--col);
+    border-radius: var(--item-small-radius);
+
+    display: flex;
+    align-items: center;
+    gap: 28px;
+
+    transition-property: background-color, transform, box-shadow, color, opacity;
+    transition-duration: var(--trans);
+    transition-timing-function: var(--trans-function);
+}
+.track-item:nth-child(odd) {
+    --bg: hsla(var(--b4), 40%);
+}
+.track-item.primary {
+    --bg: hsla(var(--h4), 30%) !important;
+    --bg-hov: hsla(var(--h4), 45%) !important;
+}
+.track-item:hover {
+    background-color: var(--bg-hov);
+}
+
+.track-item .position {
+    text-align: right;
+    min-width: 24px;
+    color: hsl(var(--c3));
 }

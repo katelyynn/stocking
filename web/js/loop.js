@@ -147,7 +147,13 @@ function create_album(album) {
     em_album.classList.add('album-grid-item');
     em_album.setAttribute('onclick',`view_album('${album}')`);
     em_album.innerHTML = (`
-    ${album}
+    <div class="artwork">
+        <img>
+    </div>
+    <div class="details">
+        <p class="track">${album}</p>
+        <p class="artist">${current_library[album][0].album_artist}</p>
+    </div>
     `);
 
     return em_album;
@@ -156,10 +162,12 @@ function create_album(album) {
 
 // show album
 function view_album(album) {
-    document.getElementById('album-title').setContent = album;
+    document.getElementById('album-title').textContent = album;
+    document.getElementById('album-artist-title').textContent = current_library[album][0].album_artist;
+
     document.getElementById('album-tracklist').innerHTML = '';
 
-    for (let track in current_library[album]) {
+    for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
         document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track]));
     }
 }
@@ -172,7 +180,7 @@ function create_track(track) {
     em_track.innerHTML = (`
     <p class="position">${track.position}</p>
     <div class="details">
-        <p class="track">${track.title}</p>
+        <p class="track" onclick="eel.play_track(${track.rawr})">${track.title}</p>
         <p class="artist">${parse_artists(track.artist, track.guests)}</p>
     </div>
     `);
