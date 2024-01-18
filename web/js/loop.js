@@ -48,7 +48,7 @@ let stocking_timeout = 100;
 async function retrieve_stock() {
     // this references the function in main.py
     stocking = await eel.get_now_playing()();
-    console.log(stocking);
+    //console.log(stocking);
 
 
     // update play/pause

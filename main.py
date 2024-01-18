@@ -76,6 +76,37 @@ def player_prev():
 def player_next():
     mb.next_track()
 
+@eel.expose()
+def get_artist_library(artist=''):
+    rawr = mb.library_search(query=artist,fields=['ArtistPeople'])
+    meow = {}
+
+    for item in rawr:
+        album = mb.library_get_file_tag(rawr[item],MBMD_Album)
+        if album not in meow:
+            meow[album] = []
+
+        meow[album].append(parse_file(rawr,False))
+
+    return meow
+
+
+@eel.expose()
+def parse_file(rawr,include_album=True):
+    if include_album:
+        return {
+            'title': mb.library_get_file_tag(rawr,MBMD_TrackTitle),
+            'artist': mb.library_get_file_tag(rawr,MBMD_Artist),
+            'guests': mb.library_get_file_tag(rawr,MBMD_ArtistsWithGuestRole),
+            'album': mb.library_get_file_tag(rawr,MBMD_Album)
+        }
+    else:
+        return {
+            'title': mb.library_get_file_tag(rawr,MBMD_TrackTitle),
+            'artist': mb.library_get_file_tag(rawr,MBMD_Artist),
+            'guests': mb.library_get_file_tag(rawr,MBMD_ArtistsWithGuestRole)
+        }
+
 #async def main():
 #    await get_now_playing();
 
