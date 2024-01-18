@@ -48,6 +48,9 @@ async function retrieve_stock() {
     // update time
     document.getElementById('current-time').textContent = parse_timestamp(stocking.status.time.position);
     document.getElementById('duration').textContent = parse_timestamp(stocking.status.time.duration);
+
+    // player bar
+    document.getElementById('bar-fill').style.setProperty('width',`${(stocking.status.time.position / stocking.status.time.duration) * 100}%`);
 }
 
 

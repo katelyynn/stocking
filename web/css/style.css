@@ -224,6 +224,12 @@ input, select, textarea {
 
 
 /*     CARDS     */
+main {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--card-gap);
+}
+
 .cards {
     display: flex;
     gap: var(--card-gap);
@@ -345,10 +351,25 @@ footer .player-bar {
     align-items: center;
     gap: var(--card-gap);
     flex: 1;
+    font-size: calc(var(--font-size) - 1px);
+}
+
+.duration {
+    color: hsl(var(--c3));
 }
 
 footer .player-bar .bar {
+    display: flex;
+    align-items: center;
     flex: 1;
+    height: 2px;
+    background-color: hsl(var(--b4));
+}
+footer .player-bar .bar .fill {
+    height: 4px;
+    background-color: hsl(var(--l3-c));
+    border-radius: 50px;
+    box-shadow: 0 0 20px hsl(var(--l4-c));
 }
 
 
