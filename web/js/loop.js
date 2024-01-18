@@ -1,6 +1,24 @@
 // main loop
 
 
+let theme = localStorage.getItem('saved_theme') || 'dark';
+if (theme != 'dark') document.body.setAttribute('data-theme',theme);
+
+
+function toggle_theme() {
+    if (theme == 'dark')
+        save_theme('oled');
+    else
+        save_theme('dark');
+}
+
+function save_theme(new_theme) {
+    document.body.setAttribute('data-theme',new_theme);
+    localStorage.setItem('saved_theme',new_theme);
+    theme = new_theme;
+}
+
+
 let stocking = {
     file: {
         track: {

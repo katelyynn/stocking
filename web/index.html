@@ -22,10 +22,10 @@
     <!-- icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- tooltips -->
-    <script src="https://unpkg.com/@popperjs/core@2" defer></script>
-    <script src="https://unpkg.com/tippy.js@6" defer></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 </head>
-<body>
+<body data-theme="dark">
     <nav></nav>
     <main class="cards">
         <section class="main cards">
@@ -82,10 +82,24 @@
             <button class="volume" id="action-volume" onclick="player_open_volume()">
                 <i class="icon w-16" data-lucide="volume-2"></i>
             </button>
+            <button class="theme" id="action-theme" onclick="toggle_theme()">
+                <i class="icon w-16 dark" data-lucide="moon"></i>
+                <i class="icon w-16 oled" data-lucide="moon-star" fill="currentColor"></i>
+            </button>
         </ul>
     </footer>
 </body>
 <script>
     lucide.createIcons();
+
+    tippy(document.getElementById('action-shuffle'),{
+        content: 'Shuffle'
+    });
+    tippy(document.getElementById('action-loop'),{
+        content: 'Repeat'
+    });
+    tippy(document.getElementById('action-theme'),{
+        content: 'Theme'
+    });
 </script>
 <script src="js/loop.js"></script>
