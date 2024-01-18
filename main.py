@@ -99,13 +99,24 @@ def get_artist_library(artist=''):
         if album not in meow:
             meow[album] = []
 
-        meow[album].append(parse_file(item,False))
+            artwork_to_send = ''
+
+            try:
+                img = Image.open(mb.library_get_file_tag(item,MBMD_Artwork))
+                res_img = img.resize((600, 600))
+                output2 = BytesIO()
+                res_img.save(output2, format="JPEG")
+                artwork_to_send = base64.b64encode(output2.getvalue()).decode('utf-8')
+            except:
+                print("invalid image")
+
+        meow[album].append(parse_file(item,False,artwork_to_send))
 
     return meow
 
 
 @eel.expose()
-def parse_file(rawrr,include_album=True):
+def parse_file(rawrr,include_album=True,output2=''):
     if include_album:
         return {
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
@@ -114,7 +125,8 @@ def parse_file(rawrr,include_album=True):
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
-            'rawr': rawrr
+            'rawr': rawrr,
+            'artwork': output2
         }
     else:
         return {
@@ -123,7 +135,8 @@ def parse_file(rawrr,include_album=True):
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
-            'rawr': rawrr
+            'rawr': rawrr,
+            'artwork': output2
         }
 
 #async def main():

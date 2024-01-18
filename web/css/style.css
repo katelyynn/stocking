@@ -492,7 +492,7 @@ footer .track-info .artwork {
 .album-grid {
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .album-grid-item {
@@ -508,10 +508,17 @@ footer .track-info .artwork {
     --shadow: none;
 }
 
+.album-grid-item .artwork {
+    --w: 200px;
+    display: flex;
+    align-items: baseline;
+}
+
 .album-grid-item .details {
     display: flex;
     flex-direction: column;
     align-items: baseline;
+    text-align: left;
 }
 
 

@@ -71,7 +71,7 @@ async function retrieve_stock() {
     // update track info
     document.getElementById('artwork').setAttribute('src',`data:image/png;base64,${stocking.file.album.cover}`);
     document.getElementById('track').textContent = stocking.file.track.title;
-    document.getElementById('artist').textContent = parse_artists(stocking.file.track.artist,stocking.file.track.guests);
+    document.getElementById('artist').innerHTML = parse_artists(stocking.file.track.artist,stocking.file.track.guests);
 
     document.getElementById('artwork-big').setAttribute('src',`data:image/png;base64,${stocking.file.album.cover}`);
 
@@ -117,9 +117,9 @@ function parse_timestamp(rawr) {
 // nyaa
 function parse_artists(artist,guests) {
     if (guests == '') {
-        return artist;
+        return `<span onclick="get_library('${artist}')">${artist}</span>`;
     } else {
-        return artist + ', ' + guests.replaceAll('; ',', ');
+        return `<span onclick="get_library('${artist}')">${artist}</span>, ${guests.replaceAll('; ',', ')}`;
     }
 }
 
@@ -132,7 +132,7 @@ async function get_library(artist) {
 
 
     current_library = await eel.get_artist_library(artist)();
-    console.log(current_library);
+    //console.log(current_library);
 
     document.getElementById('library-grid-items').innerHTML = '';
 
@@ -152,7 +152,7 @@ function create_album(album) {
     em_album.setAttribute('onclick',`view_album('${album}')`);
     em_album.innerHTML = (`
     <div class="artwork">
-        <img>
+        <img src="data:image/png;base64,${current_library[album][0].artwork}">
     </div>
     <div class="details">
         <p class="track">${album}</p>
