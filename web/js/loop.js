@@ -44,6 +44,12 @@ async function retrieve_stock() {
     // update loved
     document.getElementById('action-love').setAttribute('data-type',stocking.file.track.loved);
 
+    // shuffle
+    document.getElementById('action-shuffle').setAttribute('data-type',stocking.status.shuffle);
+
+    // loop
+    document.getElementById('action-loop').setAttribute('data-type',stocking.status.repeat);
+
 
     // update time
     document.getElementById('current-time').textContent = parse_timestamp(stocking.status.time.position);

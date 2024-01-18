@@ -28,9 +28,12 @@ def get_now_playing():
     temp_artwork = mb.get_artwork_url()
 
     if last_known_artwork != temp_artwork:
-        with open(temp_artwork, 'rb') as image:
-            last_known_b64 = base64.b64encode(image.read()).decode("utf-8")
-        last_known_artwork = temp_artwork
+        try:
+            with open(temp_artwork, 'rb') as image:
+                last_known_b64 = base64.b64encode(image.read()).decode("utf-8")
+            last_known_artwork = temp_artwork
+        except FileNotFoundError:
+            print("artwork does not exist?")
 
     send = {
         'file': {
@@ -38,7 +41,7 @@ def get_now_playing():
                 'title': mb.get_file_tag(MBMD_TrackTitle),
                 'artist': mb.get_file_tag(MBMD_Artist),
                 'guests': mb.get_file_tag(MBMD_ArtistsWithGuestRole),
-                'loved': mb.get_show_rating_love()
+                'loved': mb.get_file_tag(MBMD_RatingLove)
             },
             'album': {
                 'title': mb.get_file_tag(MBMD_Album),
@@ -48,6 +51,8 @@ def get_now_playing():
         },
         'status': {
             'state': mb.get_play_state_str(),
+            'shuffle': mb.get_shuffle(),
+            'repeat': mb.get_repeat(),
             'time': {
                 'position': mb.get_position(),
                 'duration': mb.get_duration()

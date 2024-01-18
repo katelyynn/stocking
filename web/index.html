@@ -51,10 +51,10 @@
                 <i class="icon w-16" data-lucide="skip-forward"></i>
             </button>
             <!-- -->
-            <button class="shuffle" id="action-shuffle" data-type="none" onclick="player_toggle_shuffle()">
+            <button class="shuffle" id="action-shuffle" data-type="false" onclick="player_toggle_shuffle()">
                 <i class="icon w-16" data-lucide="shuffle"></i>
             </button>
-            <button class="loop" id="action-loop" data-type="none" onclick="player_toggle_loop()">
+            <button class="loop" id="action-loop" data-type="0" onclick="player_toggle_loop()">
                 <i class="icon w-16 none" data-lucide="repeat"></i>
                 <i class="icon w-16 once" data-lucide="repeat-1"></i>
             </button>
@@ -76,8 +76,11 @@
             </div>
         </div>
         <ul class="actions right">
-            <button class="love" id="action-love" onclick="player_toggle_love()">
+            <button class="love" id="action-love" disabled onclick="player_toggle_love()">
                 <i class="icon w-16" data-lucide="heart"></i>
+            </button>
+            <button class="volume" id="action-volume" onclick="player_open_volume()">
+                <i class="icon w-16" data-lucide="volume-2"></i>
             </button>
         </ul>
     </footer>

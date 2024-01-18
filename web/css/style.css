@@ -50,11 +50,11 @@ button
     --c3: var(--hue), calc(var(--sat) * 10%), 60%;
     --ov-c1: var(--c1);
 
-    --l2: var(--hue), calc(var(--sat) * 50%), calc(var(--lit) * 83%);
+    --l2: var(--hue), calc(var(--sat) * 50%), calc(var(--lit) * 79%);
     --l3: var(--hue), calc(var(--sat) * 60%), calc(var(--lit) * 70%);
     --l4: var(--hue), calc(var(--sat) * 70%), calc(var(--lit) * 50%);
 
-    --l2-c: var(--hue), calc(var(--sat) * 50%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 83%);
+    --l2-c: var(--hue), calc(var(--sat) * 50%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 79%);
     --l3-c: var(--hue), calc(var(--sat) * 60%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 70%);
     --l4-c: var(--hue), calc(var(--sat) * 70%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 50%);
 
@@ -168,8 +168,11 @@ button:disabled {
 }
 
 
-.love {
+.love, button[data-type="true"], .loop[data-type="1"] {
     --col: hsl(var(--l3-c));
+}
+.loop[data-type="2"] {
+    --col: hsl(var(--l2-c));
 }
 
 
@@ -299,6 +302,8 @@ h3 {
 footer {
     position: absolute;
     width: calc(var(--cards-width) + (var(--card-gap) * 2));
+    /* the artist and title combo makes it taller */
+    padding: calc(var(--card-padding) - 2px) var(--card-padding);
     bottom: var(--card-gap);
     left: 0;
     right: 0;
@@ -329,7 +334,9 @@ footer .shuffle {
 /* play/pause */
 .play-pause[data-type='Paused'] .playing,
 .play-pause[data-type='Stopped'] .playing,
-.play-pause[data-type='Playing'] .paused
+.play-pause[data-type='Playing'] .paused,
+/* loop */
+.loop:not([data-type="2"]) .once, .loop[data-type="2"] .none
 {
     display: none;
 }
@@ -379,12 +386,12 @@ footer .track-info {
     align-items: center;
     gap: 6px;
 }
-footer .track-info .artist {
+/*footer .track-info .artist {
     font-size: calc(var(--font-size) - 2px);
     line-height: calc(var(--line-height) - 4px);
-}
+}*/
 footer .track-info .artwork {
-    --w: 32px;
+    --w: 36px; /* 32 if the above is enabled ^ */
     display: flex;
     align-items: center;
 }
