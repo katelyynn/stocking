@@ -120,6 +120,6 @@ def parse_file(rawr,include_album=True):
 #try:
 eel.init('web')
 eel.browsers.set_path('chrome', 'chrome-win/chrome.exe')
-eel.start('index.html', size=(1300, 700))
+eel.start('index.html', size=(1400, 800))
 #except OSError:
     #print(f"{Back.RED}{Style.BRIGHT}ERROR{Style.RESET_ALL} {Back.GREEN}{Style.BRIGHT}Google Chromium/Chrome{Style.RESET_ALL} is required to be installed.")
