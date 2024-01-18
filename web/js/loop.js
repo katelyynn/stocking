@@ -127,6 +127,10 @@ function parse_artists(artist,guests) {
 // get library
 let current_library = {};
 async function get_library(artist) {
+    document.getElementById('library-grid').style.removeProperty('display','none');
+    document.getElementById('album').style.setProperty('display','none');
+
+
     current_library = await eel.get_artist_library(artist)();
     console.log(current_library);
 
@@ -162,6 +166,9 @@ function create_album(album) {
 
 // show album
 function view_album(album) {
+    document.getElementById('library-grid').style.setProperty('display','none');
+    document.getElementById('album').style.removeProperty('display','none');
+
     document.getElementById('album-title').textContent = album;
     document.getElementById('album-artist-title').textContent = current_library[album][0].album_artist;
 
@@ -170,6 +177,13 @@ function view_album(album) {
     for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
         document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track]));
     }
+}
+
+
+// exit album
+function exit_album() {
+    document.getElementById('library-grid').style.removeProperty('display','none');
+    document.getElementById('album').style.setProperty('display','none');
 }
 
 

@@ -150,6 +150,7 @@ button {
     min-height: 32px;
     min-width: 32px;
     font-family: var(--font);
+    font-size: var(--font-size);
     font-weight: var(--force-font-weight, var(--font-weight-medium));
     border-radius: var(--radius, var(--item-med-radius));
     box-shadow: var(--shadow, var(--interact-shadow));
@@ -197,7 +198,7 @@ button:disabled {
 
 
 /*     SIDE NAV     */
-.nav-item, footer button {
+.nav-item, footer button, .back {
     --bg: transparent;
     --bg-hov: hsla(var(--b4), 60%);
     --bg-atv: hsla(var(--b4), 80%);
@@ -267,12 +268,10 @@ main {
     border-radius: var(--card-radius);
     box-shadow: var(--card-shadow);
     padding: var(--card-padding);
-    height: fit-content;
 
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    flex: 1;
 
     transition-property: background-color, border;
     transition-duration: calc(var(--trans) * 7);
@@ -499,17 +498,20 @@ footer .track-info .artwork {
 .album-grid-item {
     display: flex;
     flex-direction: column;
+    align-items: unset;
     gap: 10px;
     --padding: 0;
     --radius: 0;
     --bg: transparent;
     --bg-hov: transparent;
     --bg-atv: transparent;
+    --shadow: none;
 }
 
 .album-grid-item .details {
     display: flex;
     flex-direction: column;
+    align-items: baseline;
 }
 
 
@@ -547,4 +549,9 @@ footer .track-info .artwork {
     text-align: right;
     min-width: 24px;
     color: hsl(var(--c3));
+}
+
+
+.back {
+    width: fit-content;
 }
