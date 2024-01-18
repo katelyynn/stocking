@@ -3,9 +3,13 @@ import struct
 from musicbeeipc import *
 import asyncio
 import time
+
 import eel
 import eel.browsers
+
 import base64
+from PIL import Image
+from io import BytesIO
 
 # for logging on py side
 # can remove
@@ -29,8 +33,13 @@ def get_now_playing():
 
     if last_known_artwork != temp_artwork:
         try:
-            with open(temp_artwork, 'rb') as image:
-                last_known_b64 = base64.b64encode(image.read()).decode("utf-8")
+            img = Image.open(temp_artwork)
+            res_img = img.resize((600, 600))
+            output = BytesIO()
+            res_img.save(output, format="JPEG")
+
+            #with open(res_img, 'rb') as image:
+            last_known_b64 = base64.b64encode(output.getvalue()).decode("utf-8")
             last_known_artwork = temp_artwork
         except FileNotFoundError:
             print("artwork does not exist?")
