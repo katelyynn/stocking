@@ -17,6 +17,8 @@ from colorama import init
 from colorama import Fore, Back, Style
 init()
 
+import json
+
 mb = MusicBeeIPC()
 
 last_known_artwork = ''
@@ -94,7 +96,12 @@ def get_artist_library(artist=''):
     rawr = mb.library_search(query=artist,fields=['ArtistPeople'])
     meow = {}
 
+    count = 0
     for item in rawr:
+        print(count)
+        if (count > 250):
+            time.sleep(2)
+            count = 0
         album = mb.library_get_file_tag(item,MBMD_Album)
         if album not in meow:
             meow[album] = []
@@ -111,19 +118,21 @@ def get_artist_library(artist=''):
                 print("invalid image")
 
         meow[album].append(parse_file(item,False,artwork_to_send))
+        count += 1
 
     return meow
 
 
 @eel.expose()
 def parse_file(rawrr,include_album=True,output2=''):
+    print(mb.library_get_file_tag(rawrr,MBMD_TrackTitle), mb.library_get_file_tag(rawrr,MBMD_Album))
     if include_album:
         return {
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
-            'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
+            'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr,
             'artwork': output2
@@ -134,10 +143,22 @@ def parse_file(rawrr,include_album=True,output2=''):
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
-            'guests': mb.library_get_file_tag(rawrr,MBMD_ArtistsWithGuestRole),
+            'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'rawr': rawrr,
             'artwork': output2
         }
+
+
+@eel.expose()
+def add_to_artists(append):
+    with open('/js/artists.json') as f:
+        data = json.load(f)
+
+    data.update(append)
+
+    with open('/js/artists.json','w') as f:
+        json.dump(data, f)
+
 
 #async def main():
 #    await get_now_playing();

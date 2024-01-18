@@ -469,6 +469,22 @@ footer .track-info .artwork {
 
 
 
+/*     SIDE NAV     */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 90px;
+    padding: var(--card-padding) 0 var(--card-padding) var(--card-padding);
+    overflow-y: hidden;
+}
+nav:hover {
+    overflow-y: auto;
+}
+
+
+
+
 /*     TOOLTIP     */
 .tippy-box {
     background-color: hsl(var(--b5));

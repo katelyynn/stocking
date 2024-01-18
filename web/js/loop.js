@@ -117,9 +117,14 @@ function parse_timestamp(rawr) {
 // nyaa
 function parse_artists(artist,guests) {
     if (guests == '') {
-        return `<span onclick="get_library('${artist}')">${artist}</span>`;
+        return artist;
     } else {
-        return `<span onclick="get_library('${artist}')">${artist}</span>, ${guests.replaceAll('; ',', ')}`;
+        let guest_split = guests.split('');
+        let text = '';
+        for (let artist in guest_split)
+            text = text + `<span onclick="get_library('${guest_split[artist]}')">${guest_split[artist]}</span>, `;
+
+        return text.substring(0,text.length - 2);
     }
 }
 
@@ -127,9 +132,12 @@ function parse_artists(artist,guests) {
 // get library
 let current_library = {};
 async function get_library(artist) {
+    artist = artist.replaceAll('�','');
     document.getElementById('library-grid').style.removeProperty('display','none');
     document.getElementById('album').style.setProperty('display','none');
 
+
+    document.getElementById('library-grid-title').textContent = artist;
 
     current_library = await eel.get_artist_library(artist)();
     //console.log(current_library);
@@ -137,8 +145,11 @@ async function get_library(artist) {
     document.getElementById('library-grid-items').innerHTML = '';
 
     // show albums
+    let count = 0;
     for (let album in current_library) {
+        console.log(count);
         document.getElementById('library-grid-items').appendChild(create_album(album));
+        count += 1;
     }
 }
 
@@ -149,7 +160,7 @@ function create_album(album) {
 
     let em_album = document.createElement('button');
     em_album.classList.add('album-grid-item');
-    em_album.setAttribute('onclick',`view_album('${album}')`);
+    em_album.setAttribute('onclick',`view_album('${album.replaceAll(`'`,`\\'`)}')`);
     em_album.innerHTML = (`
     <div class="artwork">
         <img src="data:image/png;base64,${current_library[album][0].artwork}">
@@ -203,4 +214,28 @@ function create_track(track) {
 }
 
 
+// nav
+async function list_nav() {
+    $.get('js/artists.json', function(nav_list) {
+        console.log(nav_list);
+
+        for (let artist in nav_list) {
+            document.getElementById('nav').appendChild(create_nav(nav_list[artist]));
+        }
+    });
+}
+
+
+function create_nav(artist) {
+    console.log(artist);
+    let em_nav = document.createElement('button');
+    em_nav.classList.add('nav-item');
+    em_nav.setAttribute('onclick',`get_library('${artist}')`);
+    em_nav.textContent = artist;
+
+    return em_nav;
+}
+
+
+list_nav();
 setInterval(retrieve_stock,stocking_timeout);

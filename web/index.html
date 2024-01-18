@@ -15,8 +15,8 @@
     <!-- icon -->
     <link rel="shortcut icon" type="ico" href="/img/katie4k-small.webp"/>
     <!-- jquery -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/showdown/dist/showdown.min.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://unpkg.com/showdown/dist/showdown.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" defer></script>-->
     <script type="text/javascript" src="/eel.js"></script>
     <!-- icons -->
@@ -26,16 +26,15 @@
     <script src="https://unpkg.com/tippy.js@6"></script>
 </head>
 <body data-theme="dark">
-    <nav></nav>
+    <nav>
+        <h3 class="head">Artists</h3>
+        <ul id="nav"></ul>
+        <button class="add" onclick=""><i class="icon w-16" data-lucide="plus"></i></button>
+    </nav>
     <main class="cards">
         <section class="main cards">
-            <section class="card">
-                <h3 class="head">stocking player</h3>
-                <p>stuff will go here soon</p>
-                <button onclick="get_library('21 Savage')">rawr</button>
-            </section>
             <section class="card" id="library-grid" style="display: none">
-                <h3 class="head" id="library-grid-title"></h3>
+                <h2 class="head" id="library-grid-title"></h2>
                 <div class="album-grid" id="library-grid-items"></div>
             </section>
             <section class="card" id="album" style="display: none">
