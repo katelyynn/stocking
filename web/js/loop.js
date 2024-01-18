@@ -180,7 +180,7 @@ function create_track(track) {
     em_track.innerHTML = (`
     <p class="position">${track.position}</p>
     <div class="details">
-        <p class="track" onclick="eel.play_track(${track.rawr})">${track.title}</p>
+        <p class="track" onclick="eel.play_track('${track.rawr.replaceAll('\\','\\\\')}')">${track.title}</p>
         <p class="artist">${parse_artists(track.artist, track.guests)}</p>
     </div>
     `);
