@@ -122,6 +122,8 @@ body {
     transition-property: background-color;
     transition-duration: calc(var(--trans) * 7);
     transition-timing-function: var(--trans-function);
+
+    cursor: default;
 }
 
 b, strong {
@@ -258,6 +260,7 @@ main {
     border-radius: var(--card-radius);
     box-shadow: var(--card-shadow);
     padding: var(--card-padding);
+    height: fit-content;
 
     display: flex;
     flex-direction: column;
@@ -273,6 +276,17 @@ main {
     width: var(--cards-main-width);
 }
 .side {
+    width: var(--cards-sidebar-width);
+}
+
+.card.artwork {
+    padding: unset;
+    overflow: hidden;
+}
+.card.artwork img {
+    box-shadow: unset;
+    border: unset;
+    border-radius: unset;
     width: var(--cards-sidebar-width);
 }
 

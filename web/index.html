@@ -35,19 +35,21 @@
             </section>
         </section>
         <section class="side cards">
-
+            <section class="card artwork">
+                <img id="artwork-big">
+            </section>
         </section>
     </main>
     <footer class="player">
         <ul class="actions left">
-            <button class="prev" onclick="eel.player_prev()">
+            <button class="prev" id="action-skip-back" onclick="eel.player_prev()">
                 <i class="icon w-16" data-lucide="skip-back"></i>
             </button>
             <button class="play-pause" id="action-play-pause" data-type="Paused" onclick="eel.player_toggle_play()">
                 <i class="icon w-16 playing" fill="currentColor" data-lucide="pause"></i>
                 <i class="icon w-16 paused" data-lucide="play"></i>
             </button>
-            <button class="next" onclick="eel.player_next()">
+            <button class="next" id="action-skip-next" onclick="eel.player_next()">
                 <i class="icon w-16" data-lucide="skip-forward"></i>
             </button>
             <!-- -->
@@ -92,14 +94,24 @@
 <script>
     lucide.createIcons();
 
-    tippy(document.getElementById('action-shuffle'),{
+    tippy(document.getElementById('action-skip-back'),{
+        content: 'Previous'
+    });
+    let play_tip = tippy(document.getElementById('action-play-pause'),{
+        content: 'Play'
+    });
+    tippy(document.getElementById('action-skip-next'),{
+        content: 'Forward'
+    });
+
+    let shuffle_tip = tippy(document.getElementById('action-shuffle'),{
         content: 'Shuffle'
     });
-    tippy(document.getElementById('action-loop'),{
+    let loop_tip = tippy(document.getElementById('action-loop'),{
         content: 'Repeat'
     });
-    tippy(document.getElementById('action-theme'),{
-        content: 'Theme'
+    let theme_tip = tippy(document.getElementById('action-theme'),{
+        content: 'Dark theme'
     });
 </script>
 <script src="js/loop.js"></script>
