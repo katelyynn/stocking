@@ -236,8 +236,9 @@ async function view_album(album) {
     current_view_album = album;
 
     for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
-        document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track]));
+        document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track],track));
     }
+    lucide.createIcons();
 }
 
 
@@ -251,7 +252,7 @@ function exit_album() {
 
 
 // create track in tracklist
-function create_track(track) {
+function create_track(track,index,area='tracklist') {
     let em_track = document.createElement('li');
     em_track.classList.add('track-item');
     em_track.innerHTML = (`
@@ -260,9 +261,28 @@ function create_track(track) {
         <p class="track" onclick="eel.play_track('${track.rawr.replaceAll('\\','\\\\')}')">${track.title}</p>
         <p class="artist">${parse_artists(track.artist, track.guests)}</p>
     </div>
+    <div class="actions">
+        <button class="queue-remove" onclick="queue_remove('${index}','${area}')"><i class="icon w-16" data-lucide="minus"></i></button>
+        <button class="queue-next" onclick="queue_next('${index}','${area}')"><i class="icon w-16" data-lucide="plus"></i></button>
+    </div>
     `);
 
     return em_track;
+}
+
+
+function queue_next(index,area) {
+    if (area == 'tracklist') {
+        eel.queue_next(current_library[current_view_album][index].rawr);
+        get_queue();
+    }
+}
+
+function queue_remove(index,area) {
+    if (area == 'queue') {
+        eel.remove_queue_item(parseInt(index));
+        get_queue();
+    }
 }
 
 
@@ -348,7 +368,8 @@ async function get_queue() {
     if (JSON.stringify(last_queue) != JSON.stringify(queue)) {
         document.getElementById('queue').innerHTML = '';
         for (let item in queue_formatted)
-            document.getElementById('queue').appendChild(create_track(queue_formatted[item]));
+            document.getElementById('queue').appendChild(create_track(queue_formatted[item],item,'queue'));
+        lucide.createIcons();
     }
 }
 

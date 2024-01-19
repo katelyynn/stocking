@@ -51,7 +51,7 @@ def get_now_playing():
             'track': {
                 'title': mb.get_file_tag(MBMD_TrackTitle),
                 'artist': mb.get_file_tag(MBMD_Artist),
-                'guests': mb.get_file_tag(MBMD_ArtistsWithGuestRole),
+                'guests': mb.get_file_tag(MBMD_MultiArtist),
                 'loved': mb.get_file_tag(MBMD_RatingLove)
             },
             'album': {
@@ -180,11 +180,11 @@ def get_queue_item_file_url(index):
 
 
 @eel.expose()
-def add_to_queue_next(file_url):
+def queue_next(file_url):
     mb.queue_next(file_url)
 
 @eel.expose()
-def add_to_queue_last(file_url):
+def queue_last(file_url):
     mb.queue_last(file_url)
 
 

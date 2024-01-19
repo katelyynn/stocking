@@ -138,7 +138,7 @@ body {
     background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: hsl(var(--b5));
+    background: hsla(var(--b4), 40%);
     border-radius: 10px;
     background-clip: padding-box;
     width: 5px;
@@ -232,6 +232,12 @@ button:disabled {
     --bg: transparent;
     --bg-hov: hsla(var(--b4), 60%);
     --bg-atv: hsla(var(--b4), 80%);
+    --shadow: none;
+}
+.track-item button {
+    --bg: transparent;
+    --bg-hov: hsla(var(--b3), 20%);
+    --bg-atv: hsla(var(--b3), 40%);
     --shadow: none;
 }
 
@@ -549,6 +555,10 @@ nav .head button {
     min-height: unset;
 }
 
+nav ul {
+    margin-left: -12px;
+}
+
 
 
 
@@ -675,6 +685,28 @@ nav .head button {
     text-align: right;
     min-width: 24px;
     color: hsl(var(--c3));
+}
+
+.track-item .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.track-item .actions {
+    display: flex;
+}
+.track-item button {
+    --padding: 5px;
+    min-width: 26px;
+    min-height: 26px;
+}
+
+.tracklist .queue-remove,
+.queue .queue-next
+{
+    display: none;
 }
 
 
