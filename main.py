@@ -99,9 +99,6 @@ def get_artist_library(artist=''):
     count = 0
     for item in rawr:
         print(count)
-        if (count > 250):
-            time.sleep(2)
-            count = 0
         album = mb.library_get_file_tag(item,MBMD_Album)
         if album not in meow:
             meow[album] = []
@@ -127,7 +124,7 @@ def get_artwork(rawr):
 
 @eel.expose()
 def parse_file(rawrr,include_album=True,in_queue=-1):
-    print(mb.library_get_file_tag(rawrr,MBMD_TrackTitle), mb.library_get_file_tag(rawrr,MBMD_Album))
+    #print(mb.library_get_file_tag(rawrr,MBMD_TrackTitle), mb.library_get_file_tag(rawrr,MBMD_Album))
     if in_queue > -1:
         return {
             'position': in_queue,

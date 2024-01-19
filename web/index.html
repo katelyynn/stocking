@@ -108,8 +108,11 @@
             <button class="love" id="action-love" disabled onclick="player_toggle_love()">
                 <i class="icon w-16" data-lucide="heart"></i>
             </button>
-            <button class="volume" id="action-volume" onclick="player_open_volume()">
-                <i class="icon w-16" data-lucide="volume-2"></i>
+            <button class="volume volume-icons" id="action-volume" onclick="player_open_volume()">
+                <i class="icon w-16 vol-mute" data-lucide="volume-x"></i>
+                <i class="icon w-16 vol-0" data-lucide="volume"></i>
+                <i class="icon w-16 vol-1" data-lucide="volume-1"></i>
+                <i class="icon w-16 vol-2" data-lucide="volume-2"></i>
             </button>
             <button class="theme" id="action-theme" onclick="toggle_theme()">
                 <i class="icon w-16 dark" data-lucide="moon"></i>
@@ -139,6 +142,12 @@
     });
     let theme_tip = tippy(document.getElementById('action-theme'),{
         content: 'Dark theme'
+    });
+
+    let volume_tip = tippy(document.getElementById('action-volume'),{
+        content: '',
+        interactive: true,
+        allowHTML: true
     });
 </script>
 <script src="js/loop.js"></script>
