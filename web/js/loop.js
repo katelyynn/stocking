@@ -135,6 +135,8 @@ async function get_library(artist) {
     artist = artist.replaceAll('�','');
     document.getElementById('library-grid').style.removeProperty('display','none');
     document.getElementById('album').style.setProperty('display','none');
+    document.getElementById('artist-artwork').style.removeProperty('display','none');
+    document.getElementById('album-artwork').style.setProperty('display','none');
 
 
     document.getElementById('library-grid-title').textContent = artist;
@@ -203,9 +205,13 @@ async function get_album_artwork(rawr) {
 
 
 // show album
-function view_album(album) {
+async function view_album(album) {
     document.getElementById('library-grid').style.setProperty('display','none');
     document.getElementById('album').style.removeProperty('display','none');
+    document.getElementById('artist-artwork').style.setProperty('display','none');
+    document.getElementById('album-artwork').style.removeProperty('display','none');
+
+    document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_library[album][0].rawr)}`);
 
     document.getElementById('album-title').textContent = album;
     document.getElementById('album-artist-title').textContent = current_library[album][0].album_artist;
@@ -222,6 +228,8 @@ function view_album(album) {
 function exit_album() {
     document.getElementById('library-grid').style.removeProperty('display','none');
     document.getElementById('album').style.setProperty('display','none');
+    document.getElementById('artist-artwork').style.removeProperty('display','none');
+    document.getElementById('album-artwork').style.setProperty('display','none');
 }
 
 
