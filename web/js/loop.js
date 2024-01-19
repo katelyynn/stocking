@@ -142,36 +142,63 @@ async function get_library(artist) {
     current_library = await eel.get_artist_library(artist)();
     //console.log(current_library);
 
+    let sorted = [];
+    for (let album in current_library)
+        sorted.push({name:album,date:current_library[album][0].date});
+    console.log(sorted);
+    sorted.sort((a, b) => new Date(a.date) - new Date(b.date));
+    console.log(sorted);
+
+    //console.log(current_library);
+
     document.getElementById('library-grid-items').innerHTML = '';
 
     // show albums
     let count = 0;
-    for (let album in current_library) {
+    for (let album in sorted) {
         console.log(count);
-        document.getElementById('library-grid-items').appendChild(create_album(album));
+        document.getElementById('library-grid-items').appendChild(await create_album(sorted[album].name));
         count += 1;
     }
 }
 
 
 // create album
-function create_album(album) {
-    console.log(album)
+async function create_album(album) {
+    console.log(album);
+
+    let this_artwork = await get_album_artwork(current_library[album][0].rawr);
 
     let em_album = document.createElement('button');
     em_album.classList.add('album-grid-item');
     em_album.setAttribute('onclick',`view_album('${album.replaceAll(`'`,`\\'`)}')`);
     em_album.innerHTML = (`
     <div class="artwork">
-        <img src="data:image/png;base64,${current_library[album][0].artwork}">
+        <img src="data:image/png;base64,${this_artwork}">
     </div>
     <div class="details">
         <p class="track">${album}</p>
         <p class="artist">${current_library[album][0].album_artist}</p>
+        <p class="date">${current_library[album][0].date}</p>
     </div>
     `);
 
     return em_album;
+}
+
+
+// artwork flow
+async function get_album_artwork(rawr) {
+    let cached_artwork = localStorage.getItem(`cached_cover_${rawr}`) || '';
+    if (cached_artwork == '' || cached_artwork === null) {
+        let new_artwork = await eel.get_artwork(rawr)();
+        localStorage.setItem(`cached_cover_${rawr}`,new_artwork);
+        console.log('new',new_artwork);
+        return new_artwork;
+    } else {
+        console.log('cache',cached_artwork);
+        return cached_artwork;
+    }
 }
 
 

@@ -93,7 +93,7 @@ def play_track(rawr):
 
 @eel.expose()
 def get_artist_library(artist=''):
-    rawr = mb.library_search(query=artist,fields=['ArtistPeople'])
+    rawr = mb.library_search(query=artist,comparison="Is",fields=['AlbumArtist'])
     meow = {}
 
     count = 0
@@ -106,25 +106,27 @@ def get_artist_library(artist=''):
         if album not in meow:
             meow[album] = []
 
-            artwork_to_send = ''
-
-            try:
-                img = Image.open(mb.library_get_file_tag(item,MBMD_Artwork))
-                res_img = img.resize((600, 600))
-                output2 = BytesIO()
-                res_img.save(output2, format="JPEG")
-                artwork_to_send = base64.b64encode(output2.getvalue()).decode('utf-8')
-            except:
-                print("invalid image")
-
-        meow[album].append(parse_file(item,False,artwork_to_send))
+        meow[album].append(parse_file(item,False))
         count += 1
 
+    print(meow)
     return meow
 
 
 @eel.expose()
-def parse_file(rawrr,include_album=True,output2=''):
+def get_artwork(rawr):
+    try:
+        img = Image.open(mb.library_get_file_tag(rawr,MBMD_Artwork))
+        res_img = img.resize((600, 600))
+        output2 = BytesIO()
+        res_img.save(output2, format="JPEG")
+        return base64.b64encode(output2.getvalue()).decode('utf-8')
+    except:
+        print("invalid image")
+
+
+@eel.expose()
+def parse_file(rawrr,include_album=True):
     print(mb.library_get_file_tag(rawrr,MBMD_TrackTitle), mb.library_get_file_tag(rawrr,MBMD_Album))
     if include_album:
         return {
@@ -135,7 +137,7 @@ def parse_file(rawrr,include_album=True,output2=''):
             'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr,
-            'artwork': output2
+            'date': mb.library_get_file_tag(rawrr,MBMD_Year)
         }
     else:
         return {
@@ -145,7 +147,7 @@ def parse_file(rawrr,include_album=True,output2=''):
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'rawr': rawrr,
-            'artwork': output2
+            'date': mb.library_get_file_tag(rawrr,MBMD_Year)
         }
 
 
