@@ -356,7 +356,7 @@ async function get_queue() {
 
 
 // volume
-let volume = localStorage.getItem('volume') || 40;
+let volume = parseInt(localStorage.getItem('volume')) || 40;
 let volume_is_muted = JSON.parse(localStorage.getItem('volume_muted')) || false;
 let volume_increment = 5;
 update_volume_tip();
@@ -365,6 +365,12 @@ update_volume_tip();
 function update_volume_tip() {
     localStorage.setItem('volume',volume);
     localStorage.setItem('volume_muted',volume_is_muted);
+
+    if (volume_is_muted)
+        eel.set_volume(0);
+    else
+        eel.set_volume(parseInt(volume));
+
     document.getElementById('action-volume').setAttribute('data-volume-step',volume_steps());
     volume_tip.setContent(`
         <div class="volume-content" data-volume-step="${volume_steps()}">

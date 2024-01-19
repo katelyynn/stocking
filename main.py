@@ -195,6 +195,11 @@ def remove_queue_item(index):
     mb.remove_at(index)
 
 
+@eel.expose()
+def set_volume(volume):
+    mb.set_volume(volume)
+
+
 #async def main():
 #    await get_now_playing();
 
