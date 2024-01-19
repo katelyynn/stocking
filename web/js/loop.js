@@ -262,7 +262,7 @@ async function list_nav() {
     $.get('js/artists.json', function(nav_list) {
         console.log(nav_list);
 
-        for (let artist in nav_list) {
+        for (let artist in nav_list.sort((a, b) => a.localeCompare(b))) {
             document.getElementById('nav').appendChild(create_nav(nav_list[artist]));
         }
     });
@@ -281,7 +281,7 @@ function create_nav(artist) {
 
 
 function add_artist_modal() {
-    create_window('Add an artist','Enter an artist\'s name as present in your library below.<br><input placeholder="Artist name..." id="artist-input">',[
+    create_window('Add an artist','Enter an artist\'s name as present in your library below.<br><br><input placeholder="Artist name..." id="artist-input">',[
         {
             type: 'primary',
             onclick: 'submit_artist()',
@@ -292,6 +292,7 @@ function add_artist_modal() {
             text: 'Cancel'
         }
     ],'add_artist','star');
+    document.getElementById('artist-input').focus();
 }
 
 
@@ -305,3 +306,14 @@ async function submit_artist() {
 
 list_nav();
 setInterval(retrieve_stock,stocking_timeout);
+
+
+
+
+// input
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'a') {
+        add_artist_modal();
+        event.preventDefault();
+    }
+});

@@ -249,9 +249,12 @@ input, select, textarea {
     padding: var(--padding, 7px 12px);
     min-height: 32px;
     min-width: 32px;
-    font-weight: var(--force-font-weight, var(--font-weight-medium));
+    font-family: var(--font);
+    font-size: var(--font-size);
+    font-weight: var(--force-font-weight, var(--font-weight));
     border-radius: var(--radius, var(--item-med-radius));
     box-shadow: var(--shadow, var(--interact-shadow));
+    outline: unset !important;
 
     display: flex;
     align-items: center;
@@ -259,6 +262,7 @@ input, select, textarea {
 
     border: unset;
     appearance: unset;
+    box-sizing: border-box;
 
     transition-property: background-color, transform, box-shadow, color, opacity;
     transition-duration: var(--trans);
@@ -525,6 +529,18 @@ nav {
 }
 nav:hover {
     overflow-y: auto;
+}
+
+nav .head {
+    display: flex;
+}
+nav .head h3 {
+    flex: 1;
+}
+nav .head button {
+    --padding: 3px;
+    min-width: unset;
+    min-height: unset;
 }
 
 

@@ -29,9 +29,11 @@
 <body data-theme="dark">
     <div class="overlay center-full" id="hook_windows"></div>
     <nav>
-        <h3 class="head">Artists</h3>
+        <div class="head">
+            <h3>Artists</h3>
+            <button class="add" onclick="add_artist_modal()"><i class="icon w-16" data-lucide="plus"></i></button>
+        </div>
         <ul id="nav"></ul>
-        <button class="add" onclick="add_artist_modal()"><i class="icon w-16" data-lucide="plus"></i></button>
     </nav>
     <main class="cards">
         <section class="main cards">

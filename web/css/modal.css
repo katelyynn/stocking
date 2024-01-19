@@ -50,6 +50,10 @@
     padding: 5px 20px 10px;
 }
 
+.window main input {
+    width: 100%;
+}
+
 .window header {
     display: flex;
     align-items: center;
@@ -81,7 +85,12 @@
     gap: 20px;
     margin: 20px 20px 0;
     padding: 20px 0;
+    border: unset;
+    border-radius: unset;
     border-top: 1px solid hsl(var(--b4));
+}
+.window footer button {
+    --padding: 7px 12px;
 }
 
 
