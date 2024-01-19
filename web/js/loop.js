@@ -131,6 +131,7 @@ function parse_artists(artist,guests) {
 
 // get library
 let current_library = {};
+let current_album_first_track_filename = '';
 async function get_library(artist) {
     artist = artist.replaceAll('�','');
     document.getElementById('library-grid').style.removeProperty('display','none');
@@ -190,9 +191,9 @@ async function create_album(album) {
 
 
 // artwork flow
-async function get_album_artwork(rawr) {
+async function get_album_artwork(rawr,force=false) {
     let cached_artwork = localStorage.getItem(`cached_cover_${rawr}`) || '';
-    if (cached_artwork == '' || cached_artwork === null) {
+    if (cached_artwork == '' || cached_artwork === null || force) {
         let new_artwork = await eel.get_artwork(rawr)();
         localStorage.setItem(`cached_cover_${rawr}`,new_artwork);
         console.log('new',new_artwork);
@@ -201,6 +202,11 @@ async function get_album_artwork(rawr) {
         console.log('cache',cached_artwork);
         return cached_artwork;
     }
+}
+
+
+async function refresh_artwork() {
+    document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_album_first_track_filename,true)}`);
 }
 
 
@@ -217,6 +223,8 @@ async function view_album(album) {
     document.getElementById('album-artist-title').textContent = current_library[album][0].album_artist;
 
     document.getElementById('album-tracklist').innerHTML = '';
+
+    current_album_first_track_filename = current_library[album][0].rawr;
 
     for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
         document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track]));

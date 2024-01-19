@@ -316,6 +316,23 @@ main {
 .card.artwork {
     padding: unset;
     overflow: hidden;
+    aspect-ratio: 1 / 1;
+    position: relative;
+}
+.card.artwork .overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding: var(--card-padding);
+    transition-property: opacity;
+    transition-duration: var(--trans);
+    transition-timing-function: var(--trans-function);
+}
+.card.artwork:hover .overlay {
+    opacity: 1;
 }
 .card.artwork img {
     box-shadow: unset;
