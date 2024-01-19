@@ -153,13 +153,13 @@ def parse_file(rawrr,include_album=True):
 
 @eel.expose()
 def add_to_artists(append):
-    with open('/js/artists.json') as f:
+    with open('./web/js/artists.json') as f:
         data = json.load(f)
 
-    data.update(append)
+    data.append(append)
 
-    with open('/js/artists.json','w') as f:
-        json.dump(data, f)
+    with open('./web/js/artists.json','w') as f:
+        json.dump(data, f, ensure_ascii=False)
 
 
 #async def main():

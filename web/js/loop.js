@@ -280,5 +280,28 @@ function create_nav(artist) {
 }
 
 
+function add_artist_modal() {
+    create_window('Add an artist','Enter an artist\'s name as present in your library below.<br><input placeholder="Artist name..." id="artist-input">',[
+        {
+            type: 'primary',
+            onclick: 'submit_artist()',
+            text: 'Submit'
+        },
+        {
+            onclick: 'kill_window(\'add_artist\')',
+            text: 'Cancel'
+        }
+    ],'add_artist','star');
+}
+
+
+async function submit_artist() {
+    await eel.add_to_artists(document.getElementById('artist-input').value)();
+    document.getElementById('nav').innerHTML = '';
+    list_nav();
+    kill_window('add_artist');
+}
+
+
 list_nav();
 setInterval(retrieve_stock,stocking_timeout);

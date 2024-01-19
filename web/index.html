@@ -12,6 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
     <!-- icon -->
     <link rel="shortcut icon" type="ico" href="/img/katie4k-small.webp"/>
     <!-- jquery -->
@@ -26,10 +27,11 @@
     <script src="https://unpkg.com/tippy.js@6"></script>
 </head>
 <body data-theme="dark">
+    <div class="overlay center-full" id="hook_windows"></div>
     <nav>
         <h3 class="head">Artists</h3>
         <ul id="nav"></ul>
-        <button class="add" onclick=""><i class="icon w-16" data-lucide="plus"></i></button>
+        <button class="add" onclick="add_artist_modal()"><i class="icon w-16" data-lucide="plus"></i></button>
     </nav>
     <main class="cards">
         <section class="main cards">
@@ -134,3 +136,4 @@
     });
 </script>
 <script src="js/loop.js"></script>
+<script src="js/modal.js"></script>
