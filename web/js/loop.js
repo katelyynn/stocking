@@ -129,10 +129,10 @@ function parse_artists(artist,guests) {
     if (guests == '') {
         return `<span onclick="get_library('${artist}')">${artist}</span>`;
     } else {
-        let guest_split = guests.split('');
+        let guest_split = guests.replaceAll('','').split('\u0000');
         let text = '';
         for (let artist in guest_split)
-            text = text + `<span onclick="get_library('${guest_split[artist]}')">${guest_split[artist]}</span>, `;
+            if (guest_split[artist] != '') text = text + `<span onclick="get_library('${guest_split[artist]}')">${guest_split[artist]}</span>, `;
 
         return text.substring(0,text.length - 2);
     }
