@@ -200,6 +200,15 @@ def set_volume(volume):
     mb.set_volume(volume)
 
 
+@eel.expose()
+def set_loop_state(state):
+    mb.set_repeat(state)
+
+@eel.expose()
+def set_shuffle_state(state):
+    mb.set_shuffle(state)
+
+
 #async def main():
 #    await get_now_playing();
 

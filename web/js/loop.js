@@ -424,6 +424,26 @@ function volume_steps() {
 }
 
 
+
+
+// shuffle & loop
+function player_toggle_loop() {
+    if (stocking.status.repeat <= 1) {
+        eel.set_loop_state(stocking.status.repeat += 1);
+    } else {
+        eel.set_loop_state(0);
+    }
+}
+
+function player_toggle_shuffle() {
+    if (stocking.status.shuffle <= 0) {
+        eel.set_shuffle_state(stocking.status.shuffle += 1);
+    } else {
+        eel.set_shuffle_state(0);
+    }
+}
+
+
 list_nav();
 setInterval(retrieve_stock,stocking_timeout);
 setInterval(get_queue,queue_timeout);
