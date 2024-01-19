@@ -126,9 +126,20 @@ def get_artwork(rawr):
 
 
 @eel.expose()
-def parse_file(rawrr,include_album=True):
+def parse_file(rawrr,include_album=True,in_queue=-1):
     print(mb.library_get_file_tag(rawrr,MBMD_TrackTitle), mb.library_get_file_tag(rawrr,MBMD_Album))
-    if include_album:
+    if in_queue > -1:
+        return {
+            'position': in_queue,
+            'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
+            'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
+            'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
+            'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
+            'album': mb.library_get_file_tag(rawrr,MBMD_Album),
+            'rawr': rawrr,
+            'date': mb.library_get_file_tag(rawrr,MBMD_Year)
+        }
+    elif include_album:
         return {
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
@@ -160,6 +171,31 @@ def add_to_artists(append):
 
     with open('./web/js/artists.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False)
+
+
+@eel.expose()
+def get_queue_length():
+    return mb.now_playing_list_get_item_count()
+
+@eel.expose()
+def get_queue_item_file_url(index):
+    return mb.now_playing_list_get_list_file_url(index)
+
+
+@eel.expose()
+def add_to_queue_next(file_url):
+    mb.queue_next(file_url)
+
+@eel.expose()
+def add_to_queue_last(file_url):
+    mb.queue_last(file_url)
+
+
+# fingers crossed this is what i think
+# it literally is a guessing game
+@eel.expose()
+def remove_queue_item(index):
+    mb.remove_at(index)
 
 
 #async def main():

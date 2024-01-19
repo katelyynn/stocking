@@ -51,8 +51,10 @@ let stocking = {
         }
     }
 };
-// 0.5s
+// 0.1s
 let stocking_timeout = 100;
+// 1s
+let queue_timeout = 1000;
 
 
 async function retrieve_stock() {
@@ -132,6 +134,7 @@ function parse_artists(artist,guests) {
 // get library
 let current_library = {};
 let current_album_first_track_filename = '';
+let current_view_album = '';
 async function get_library(artist) {
     artist = artist.replaceAll('�','');
     document.getElementById('library-grid').style.removeProperty('display','none');
@@ -170,7 +173,7 @@ async function get_library(artist) {
 async function create_album(album) {
     console.log(album);
 
-    let this_artwork = await get_album_artwork(current_library[album][0].rawr);
+    let this_artwork = await get_album_artwork(current_library[album][0].rawr,false,current_library[album[0].album_artist],album);
 
     let em_album = document.createElement('button');
     em_album.classList.add('album-grid-item');
@@ -191,11 +194,11 @@ async function create_album(album) {
 
 
 // artwork flow
-async function get_album_artwork(rawr,force=false) {
-    let cached_artwork = localStorage.getItem(`cached_cover_${rawr}`) || '';
+async function get_album_artwork(rawr,force=false,album_artist,album) {
+    let cached_artwork = localStorage.getItem(`cached_cover_${album_artist}_${album}`) || '';
     if (cached_artwork == '' || cached_artwork === null || force) {
         let new_artwork = await eel.get_artwork(rawr)();
-        localStorage.setItem(`cached_cover_${rawr}`,new_artwork);
+        localStorage.setItem(`cached_cover_${album_artist}_${album}`,new_artwork);
         console.log('new',new_artwork);
         return new_artwork;
     } else {
@@ -206,7 +209,7 @@ async function get_album_artwork(rawr,force=false) {
 
 
 async function refresh_artwork() {
-    document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_album_first_track_filename,true)}`);
+    document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_album_first_track_filename,true,current_library[current_view_album][0].album_artist,current_view_album)}`);
 }
 
 
@@ -217,7 +220,7 @@ async function view_album(album) {
     document.getElementById('artist-artwork').style.setProperty('display','none');
     document.getElementById('album-artwork').style.removeProperty('display','none');
 
-    document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_library[album][0].rawr)}`);
+    document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_library[album][0].rawr,false,current_library[album][0].album_artist,album)}`);
 
     document.getElementById('album-title').textContent = album;
     document.getElementById('album-artist-title').textContent = current_library[album][0].album_artist;
@@ -225,6 +228,7 @@ async function view_album(album) {
     document.getElementById('album-tracklist').innerHTML = '';
 
     current_album_first_track_filename = current_library[album][0].rawr;
+    current_view_album = album;
 
     for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
         document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track]));
@@ -304,8 +308,49 @@ async function submit_artist() {
 }
 
 
+// queue
+// TODO: in theory if this was all controlled by stocking, this
+// periodic checking would not be required - as i could just
+// (when required) append to these lists if they need to be changed
+// maybe change in the future?
+
+// TODO: maybe in the future queue could be completely stocking custom and we could
+// periodically check the next queued track and make it match the next track in
+// our custom queue :3 (would allow adding a track wherever we want in the queue)
+// this would literally be easier lol
+let queue_length = 0;
+let queue = [];
+let queue_formatted = [];
+let last_queue = [];
+async function get_queue() {
+    // it returns starting from 1, the rest of the flow starts from 0
+    // so we minus 1 here
+    queue_length = await eel.get_queue_length()() - 1;
+
+    last_queue = queue;
+    queue = [];
+    queue_formatted = [];
+
+    for (let i = 0; i <= queue_length; i++) {
+        let temporary_file_name = await eel.get_queue_item_file_url(i)();
+        queue.push(temporary_file_name);
+
+        // file info
+        let temporary_file_info = await eel.parse_file(temporary_file_name,true,parseInt(i) + 1)();
+        queue_formatted.push(temporary_file_info);
+    }
+
+    if (JSON.stringify(last_queue) != JSON.stringify(queue)) {
+        document.getElementById('queue').innerHTML = '';
+        for (let item in queue_formatted)
+            document.getElementById('queue').appendChild(create_track(queue_formatted[item]));
+    }
+}
+
+
 list_nav();
 setInterval(retrieve_stock,stocking_timeout);
+setInterval(get_queue,queue_timeout);
 
 
 
