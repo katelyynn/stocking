@@ -724,6 +724,9 @@ nav ul {
 .tracklist .track-item.artist-same .artist {
     display: none;
 }
+.track-item .track {
+    width: fit-content;
+}
 
 .track-item .length {
     color: hsl(var(--c3));
