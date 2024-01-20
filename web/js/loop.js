@@ -262,10 +262,15 @@ function create_track(track,index,area='tracklist') {
         <p class="artist">${parse_artists(track.artist, track.guests)}</p>
     </div>
     <div class="actions">
-        <button class="queue-remove" onclick="queue_remove('${index}','${area}')"><i class="icon w-16" data-lucide="minus"></i></button>
+        <button class="queue-remove" onclick="queue_remove('${index}','${area}')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="minus" class="lucide lucide-minus icon w-16"><path d="M5 12h14"></path></svg>
+        </button>
         <button class="queue-next" onclick="queue_next('${index}','${area}')"><i class="icon w-16" data-lucide="plus"></i></button>
     </div>
     `);
+
+    if (track.guests == '' && track.artist == track.album_artist)
+        em_track.classList.add('artist-same');
 
     return em_track;
 }
@@ -347,6 +352,10 @@ let queue_length = 0;
 let queue = [];
 let queue_formatted = [];
 let last_queue = [];
+
+let queue_element = document.createElement('ul');
+queue_element.classList.add('queue');
+
 async function get_queue() {
     // it returns starting from 1, the rest of the flow starts from 0
     // so we minus 1 here
@@ -366,11 +375,18 @@ async function get_queue() {
     }
 
     if (JSON.stringify(last_queue) != JSON.stringify(queue)) {
-        document.getElementById('queue').innerHTML = '';
+        queue_element.innerHTML = '';
         for (let item in queue_formatted)
-            document.getElementById('queue').appendChild(create_track(queue_formatted[item],item,'queue'));
+            queue_element.appendChild(create_track(queue_formatted[item],item,'queue'));
         lucide.createIcons();
     }
+
+    queue_tip.setContent(`
+    <div class="queue-content">
+        <h3 class="head">Queue</h3>
+        ${queue_element.outerHTML}
+    </div>
+    `);
 }
 
 

@@ -510,6 +510,10 @@ footer .track-info .artwork {
 .artist {
     color: hsl(var(--c3));
 }
+.date {
+    color: hsla(var(--c3), 80%);
+    font-size: calc(var(--font-size) - 1px);
+}
 
 :is(.track-item, .track-info) :is(.track, .artist span):hover {
     color: hsl(var(--c1));
@@ -573,9 +577,19 @@ nav ul {
     padding: 0 2px;
     border-radius: var(--item-med-radius);
     box-shadow: var(--menu-shadow);
+    width: fit-content;
+    max-width: 650px !important;
 }
 .tippy-arrow {
     display: none;
+}
+
+
+/*     QUEUE     */
+.queue-content {
+    padding: 6px calc(6px - 2px);
+    text-align: left;
+    min-width: 450px;
 }
 
 
@@ -664,7 +678,7 @@ nav ul {
 
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: 12px;
 
     transition-property: background-color, transform, box-shadow, color, opacity;
     transition-duration: var(--trans);
@@ -692,6 +706,9 @@ nav ul {
     flex-direction: column;
     justify-content: center;
     flex: 1;
+}
+.track-item.artist-same .artist {
+    display: none;
 }
 
 .track-item .actions {

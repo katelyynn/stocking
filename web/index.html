@@ -52,18 +52,14 @@
             <section class="card artwork" id="live-artwork" style="display: none">
                 <img id="artwork-big">
             </section>
-            <section class="card artwork" id="artist-artwork">
+            <section class="card artwork" id="artist-artwork" style="display: none">
                 <img id="artwork-big-artist">
             </section>
-            <section class="card artwork" id="album-artwork">
+            <section class="card artwork" id="album-artwork" style="display: none">
                 <img id="artwork-big-album">
                 <div class="overlay">
                     <button class="update" onclick="refresh_artwork()">Refresh</button>
                 </div>
-            </section>
-            <section class="card">
-                <h3 class="head">Queue</h3>
-                <ul class="queue" id="queue"></ul>
             </section>
         </section>
     </main>
@@ -108,7 +104,10 @@
             <button class="love" id="action-love" disabled onclick="player_toggle_love()">
                 <i class="icon w-16" data-lucide="heart"></i>
             </button>
-            <button class="volume volume-icons" id="action-volume" onclick="player_open_volume()">
+            <button class="queue-button" id="action-queue">
+                <i class="icon w-16" data-lucide="list-music"></i>
+            </button>
+            <button class="volume volume-icons" id="action-volume" onclick="volume_mute()">
                 <i class="icon w-16 vol-mute" data-lucide="volume-x"></i>
                 <i class="icon w-16 vol-0" data-lucide="volume"></i>
                 <i class="icon w-16 vol-1" data-lucide="volume-1"></i>
@@ -145,6 +144,11 @@
     });
 
     let volume_tip = tippy(document.getElementById('action-volume'),{
+        content: '',
+        interactive: true,
+        allowHTML: true
+    });
+    let queue_tip = tippy(document.getElementById('action-queue'),{
         content: '',
         interactive: true,
         allowHTML: true
