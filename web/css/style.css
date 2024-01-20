@@ -534,6 +534,11 @@ footer .track-info .artwork {
     font-size: calc(var(--font-size) - 1px);
 }
 
+:is(.track-item, .track-info) :is(.track, .artist span) {
+    transition-property: color;
+    transition-duration: var(--trans);
+    transition-timing-function: var(--trans-function);
+}
 :is(.track-item, .track-info) :is(.track, .artist span):hover {
     color: hsl(var(--c1));
 }
@@ -735,6 +740,7 @@ nav ul {
 
 .track-item .length {
     color: hsl(var(--c3));
+    font-size: calc(var(--font-size) - 1px);
 }
 
 .track-item .actions {
