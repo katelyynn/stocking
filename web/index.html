@@ -42,7 +42,14 @@
                 <div class="album-grid" id="library-grid-items"></div>
             </section>
             <section class="card" id="album" style="display: none">
-                <button class="head back" onclick="exit_album()"><i class="icon w-16" data-lucide="chevron-left"></i>Back</button>
+                <div class="buttons">
+                    <div class="left fill">
+                        <button class="head back" onclick="exit_album()"><i class="icon w-16" data-lucide="chevron-left"></i>Back</button>
+                    </div>
+                    <div class="right">
+                        <button class="primary" onclick="play_album()"><i class="icon w-16" data-lucide="play"></i>Play</button>
+                    </div>
+                </div>
                 <h1 id="album-title"></h1>
                 <h2 id="album-artist-title"></h2>
                 <ul class="tracklist" id="album-tracklist"></ul>

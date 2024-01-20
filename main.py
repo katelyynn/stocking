@@ -45,6 +45,8 @@ def get_now_playing():
             last_known_artwork = temp_artwork
         except FileNotFoundError:
             print("artwork does not exist?")
+        except AttributeError:
+            print("blehhhhh")
 
     send = {
         'file': {
@@ -86,6 +88,10 @@ def player_prev():
 @eel.expose()
 def player_next():
     mb.next_track()
+
+@eel.expose()
+def player_stop():
+    mb.stop()
 
 @eel.expose()
 def play_track(rawr):
@@ -187,6 +193,14 @@ def queue_next(file_url):
 def queue_last(file_url):
     mb.queue_last(file_url)
 
+@eel.expose()
+def queue_clear():
+    mb.clear_now_playing_list()
+
+@eel.expose()
+def get_index():
+    return mb.get_current_index()
+
 
 # fingers crossed this is what i think
 # it literally is a guessing game
@@ -221,7 +235,7 @@ def set_shuffle_state(state):
 
 #try:
 eel.init('web')
-eel.browsers.set_path('chrome', 'chrome-win/chrome.exe')
-eel.start('index.html', size=(1400, 800))
+#eel.browsers.set_path('chrome', 'chrome-win/chrome.exe')
+eel.start('index.html', mode='default', size=(1400, 800))
 #except OSError:
     #print(f"{Back.RED}{Style.BRIGHT}ERROR{Style.RESET_ALL} {Back.GREEN}{Style.BRIGHT}Google Chromium/Chrome{Style.RESET_ALL} is required to be installed.")

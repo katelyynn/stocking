@@ -251,8 +251,20 @@ function exit_album() {
 }
 
 
+// play album
+function play_album() {
+    eel.player_stop();
+    eel.queue_clear();
+    for (let track in current_library[current_view_album].sort((a, b) => a.position - b.position)) {
+        eel.queue_next(current_library[current_view_album][track].rawr);
+    }
+    eel.player_toggle_play();
+    get_queue();
+}
+
+
 // create track in tracklist
-function create_track(track,index,area='tracklist') {
+function create_track(track,index,area='tracklist',now_playing=false) {
     let em_track = document.createElement('li');
     em_track.classList.add('track-item');
     em_track.innerHTML = (`
@@ -271,6 +283,9 @@ function create_track(track,index,area='tracklist') {
 
     if (track.guests == '' && track.artist == track.album_artist)
         em_track.classList.add('artist-same');
+
+    if (now_playing)
+        em_track.classList.add('primary');
 
     return em_track;
 }
@@ -353,6 +368,9 @@ let queue = [];
 let queue_formatted = [];
 let last_queue = [];
 
+let current_index = -1;
+let last_index = -1;
+
 let queue_element = document.createElement('ul');
 queue_element.classList.add('queue');
 
@@ -374,19 +392,25 @@ async function get_queue() {
         queue_formatted.push(temporary_file_info);
     }
 
-    if (JSON.stringify(last_queue) != JSON.stringify(queue)) {
-        queue_element.innerHTML = '';
-        for (let item in queue_formatted)
-            queue_element.appendChild(create_track(queue_formatted[item],item,'queue'));
-        lucide.createIcons();
-    }
+    current_index = await eel.get_index()();
 
-    queue_tip.setContent(`
-    <div class="queue-content">
-        <h3 class="head">Queue</h3>
-        ${queue_element.outerHTML}
-    </div>
-    `);
+    //console.log(last_queue,(last_index + 1),JSON.stringify(last_queue) != JSON.stringify(queue) && last_index != current_index,'->',JSON.stringify(last_queue) != JSON.stringify(queue),last_index != current_index);
+    if (JSON.stringify(last_queue) != JSON.stringify(queue) || last_index != current_index) {
+        last_index = current_index;
+        queue_element.innerHTML = '';
+        for (let item in queue_formatted) {
+            console.log(queue_formatted[item].position == (current_index + 1), queue_formatted[item].position, (current_index + 1));
+            queue_element.appendChild(create_track(queue_formatted[item],item,'queue',queue_formatted[item].position == (current_index + 1)));
+        }
+        lucide.createIcons();
+
+        queue_tip.setContent(`
+        <div class="queue-content">
+            <h3 class="head">Queue</h3>
+            ${queue_element.outerHTML}
+        </div>
+        `);
+    }
 }
 
 
