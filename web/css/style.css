@@ -339,6 +339,11 @@ main {
     display: flex;
     justify-content: center;
     align-items: end;
+    width: unset;
+    height: unset;
+    z-index: unset;
+    pointer-events: unset;
+    transition: unset;
     padding: var(--card-padding);
     transition-property: opacity;
     transition-duration: var(--trans);

@@ -36,7 +36,7 @@ def get_now_playing():
     if last_known_artwork != temp_artwork:
         try:
             img = Image.open(temp_artwork)
-            res_img = img.resize((600, 600))
+            res_img = img.resize((400, 400))
             output = BytesIO()
             res_img.save(output, format="JPEG")
 

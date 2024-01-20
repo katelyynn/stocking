@@ -300,7 +300,7 @@ function create_track(track,index,area='tracklist',now_playing=false) {
     em_track.innerHTML = (`
     <p class="position">${track.position}</p>
     <div class="details">
-        <p class="track" onclick="eel.play_track('${track.rawr.replaceAll('\\','\\\\')}')">${track.title}</p>
+        <p class="track" onclick="play_track('${index}','${area}')">${track.title}</p>
         <p class="artist">${parse_artists(track.artist, track.guests)}</p>
     </div>
     <p class="length">${track.length}</p>
@@ -319,6 +319,13 @@ function create_track(track,index,area='tracklist',now_playing=false) {
         em_track.classList.add('primary');
 
     return em_track;
+}
+
+
+function play_track(index,area) {
+    if (area == 'tracklist') {
+        eel.play_track(current_library[current_view_album][index].rawr);
+    }
 }
 
 
