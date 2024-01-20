@@ -150,6 +150,10 @@ async function get_library(artist) {
     document.getElementById('artist-artwork').style.removeProperty('display','none');
     document.getElementById('album-artwork').style.setProperty('display','none');
 
+    document.body.style.removeProperty('--hue');
+    document.body.style.removeProperty('--sat');
+    document.body.style.removeProperty('--lit');
+
 
     document.getElementById('library-grid-title').textContent = artist;
 
@@ -227,6 +231,19 @@ async function view_album(album) {
 
     document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_library[album][0].rawr,false,current_library[album][0].album_artist,album)}`);
 
+    document.getElementById('artwork-big-album').addEventListener('load',function() {
+        try {
+            let vibrant = new Vibrant(document.getElementById('artwork-big-album'));
+            let swatches = vibrant.swatches();
+            for (let swatch in swatches) {
+                let hsl = swatches.Vibrant.getHsl();
+                document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
+                document.body.style.setProperty('--sat',hsl[1]);
+                //document.body.style.setProperty('--lit',hsl[2]);
+            }
+        } catch(e) {}
+    })
+
     document.getElementById('album-title').textContent = album;
     document.getElementById('album-artist-title').textContent = current_library[album][0].album_artist;
 
@@ -248,6 +265,10 @@ function exit_album() {
     document.getElementById('album').style.setProperty('display','none');
     document.getElementById('artist-artwork').style.removeProperty('display','none');
     document.getElementById('album-artwork').style.setProperty('display','none');
+
+    document.body.style.removeProperty('--hue');
+    document.body.style.removeProperty('--sat');
+    document.body.style.removeProperty('--lit');
 }
 
 
