@@ -182,6 +182,7 @@ button {
     font-family: var(--font);
     font-size: var(--font-size);
     font-weight: var(--force-font-weight, var(--font-weight-medium));
+    line-height: var(--line-height);
     border-radius: var(--radius, var(--item-med-radius));
     box-shadow: var(--shadow, var(--interact-shadow));
 
@@ -393,6 +394,11 @@ h3 {
 }
 .buttons .fill {
     flex: 1;
+}
+
+.buttons > div {
+    display: flex;
+    gap: 6px;
 }
 
 

@@ -263,6 +263,15 @@ function play_album() {
 }
 
 
+// queue album last
+function queue_album() {
+    for (let track in current_library[current_view_album].sort((a, b) => a.position - b.position)) {
+        eel.queue_last(current_library[current_view_album][track].rawr);
+    }
+    get_queue();
+}
+
+
 // create track in tracklist
 function create_track(track,index,area='tracklist',now_playing=false) {
     let em_track = document.createElement('li');
