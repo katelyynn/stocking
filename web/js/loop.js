@@ -282,6 +282,7 @@ function create_track(track,index,area='tracklist',now_playing=false) {
         <p class="track" onclick="eel.play_track('${track.rawr.replaceAll('\\','\\\\')}')">${track.title}</p>
         <p class="artist">${parse_artists(track.artist, track.guests)}</p>
     </div>
+    <p class="length">${track.length}</p>
     <div class="actions">
         <button class="queue-remove" onclick="queue_remove('${index}','${area}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="minus" class="lucide lucide-minus icon w-16"><path d="M5 12h14"></path></svg>

@@ -140,7 +140,8 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
             'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr,
-            'date': mb.library_get_file_tag(rawrr,MBMD_Year)
+            'date': mb.library_get_file_tag(rawrr,MBMD_Year),
+            'length': mb.library_get_file_property(rawrr,MBFP_Duration)
         }
     elif include_album:
         return {
@@ -151,7 +152,8 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
             'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr,
-            'date': mb.library_get_file_tag(rawrr,MBMD_Year)
+            'date': mb.library_get_file_tag(rawrr,MBMD_Year),
+            'length': mb.library_get_file_property(rawrr,MBFP_Duration)
         }
     else:
         return {
@@ -161,7 +163,8 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
             'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'rawr': rawrr,
-            'date': mb.library_get_file_tag(rawrr,MBMD_Year)
+            'date': mb.library_get_file_tag(rawrr,MBMD_Year),
+            'length': mb.library_get_file_property(rawrr,MBFP_Duration)
         }
 
 

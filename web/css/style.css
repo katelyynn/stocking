@@ -721,8 +721,12 @@ nav ul {
     justify-content: center;
     flex: 1;
 }
-.track-item.artist-same .artist {
+.tracklist .track-item.artist-same .artist {
     display: none;
+}
+
+.track-item .length {
+    color: hsl(var(--c3));
 }
 
 .track-item .actions {
