@@ -39,7 +39,14 @@
     <main class="cards">
         <section class="main cards">
             <section class="card" id="library-grid" style="display: none">
-                <h2 class="head" id="library-grid-title"></h2>
+                <div class="head flex">
+                    <h2 id="library-grid-title"></h2>
+                    <select>
+                        <option value="album">Albums</option>
+                        <option value="single">Singles</option>
+                        <option value="ep">EPs</option>
+                    </select>
+                </div>
                 <div class="album-grid" id="library-grid-items"></div>
             </section>
             <section class="card" id="album" style="display: none">

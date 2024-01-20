@@ -412,6 +412,14 @@ h3 {
     height: 16px;
     stroke-width: 2.5px;
 }
+.w-32 {
+    width: 32px;
+    height: 32px;
+}
+.w-48 {
+    width: 48px;
+    height: 48px;
+}
 
 
 
@@ -500,6 +508,9 @@ footer .player-bar {
     background-color: hsl(var(--l3-c));
     border-radius: 50px;
     box-shadow: 0 0 20px 4px hsl(var(--l4-c));
+    transition-property: background-color, box-shadow;
+    transition-duration: calc(var(--trans) * 7);
+    transition-timing-function: var(--trans-function);
 }
 
 
@@ -543,6 +554,14 @@ footer .track-info .artwork {
     color: hsl(var(--c1));
 }
 
+.artwork {
+    display: flex;
+    justify-content: center;
+    align-items: center !important;
+    color: hsl(var(--c3));
+    background-color: hsla(var(--b6),50%);
+    border-radius: var(--item-med-radius);
+}
 .artwork img {
     width: var(--w);
     height: var(--w);
@@ -571,10 +590,10 @@ nav:hover {
     overflow-y: auto;
 }
 
-nav .head {
+nav .head, .head.flex {
     display: flex;
 }
-nav .head h3 {
+nav .head h3, .head.flex h2 {
     flex: 1;
 }
 nav .head button {
@@ -658,8 +677,8 @@ nav ul {
 /*     ALBUM GRID     */
 .album-grid {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--card-gap);
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 .album-grid-item {
@@ -667,18 +686,21 @@ nav ul {
     flex-direction: column;
     align-items: unset;
     gap: 10px;
-    --padding: 0;
-    --radius: 0;
-    --bg: transparent;
-    --bg-hov: transparent;
-    --bg-atv: transparent;
+    --padding: 10px;
+    --radius: var(--item-med-radius);
+    --bg: hsla(var(--b4), 20%);
+    --bg-hov: hsla(var(--b4), 35%);
+    --bg-atv: hsla(var(--b4), 50%);
     --shadow: none;
+    animation: chip_in 0.3s;
+    animation-timing-function: var(--trans-function);
 }
 
 .album-grid-item .artwork {
-    --w: 200px;
+    --w: 100%;
     display: flex;
     align-items: baseline;
+    aspect-ratio: 1 / 1;
 }
 
 .album-grid-item .details {
@@ -707,6 +729,8 @@ nav ul {
     transition-property: background-color, transform, box-shadow, color, opacity;
     transition-duration: var(--trans);
     transition-timing-function: var(--trans-function);
+    animation: chip_in 0.3s;
+    animation-timing-function: var(--trans-function);
 }
 .track-item:nth-child(odd) {
     --bg: hsla(var(--b4), 40%);

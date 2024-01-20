@@ -120,7 +120,8 @@ function parse_timestamp(rawr) {
     let mins = '0' + date.getMinutes();
     let secs = '0' + date.getSeconds();
 
-    return mins.substr(-2) + ':' + secs.substr(-2);
+    //return mins.substr(-2) + ':' + secs.substr(-2);
+    return date.getMinutes() + ':' + secs.substr(-2);
 }
 
 
@@ -175,6 +176,7 @@ async function get_library(artist) {
     for (let album in sorted) {
         document.getElementById('library-grid-items').appendChild(await create_album(sorted[album].name));
     }
+    lucide.createIcons();
 }
 
 
@@ -187,16 +189,31 @@ async function create_album(album) {
     let em_album = document.createElement('button');
     em_album.classList.add('album-grid-item');
     em_album.setAttribute('onclick',`view_album('${album.replaceAll(`'`,`\\'`)}')`);
-    em_album.innerHTML = (`
-    <div class="artwork">
-        <img src="data:image/png;base64,${this_artwork}">
-    </div>
-    <div class="details">
-        <p class="track">${album}</p>
-        <p class="artist">${current_library[album][0].album_artist}</p>
-        <p class="date">${current_library[album][0].date}</p>
-    </div>
-    `);
+    console.log('b',this_artwork);
+
+    if (this_artwork == '' || this_artwork == 'null' || this_artwork == null) {
+        em_album.innerHTML = (`
+        <div class="artwork missing">
+            <i class="icon w-48" data-lucide="disc-album"></i>
+        </div>
+        <div class="details">
+            <p class="track">${album}</p>
+            <p class="artist">${current_library[album][0].album_artist}</p>
+            <p class="date">${current_library[album][0].date}</p>
+        </div>
+        `);
+    } else {
+        em_album.innerHTML = (`
+        <div class="artwork">
+            <img src="data:image/png;base64,${this_artwork}">
+        </div>
+        <div class="details">
+            <p class="track">${album}</p>
+            <p class="artist">${current_library[album][0].album_artist}</p>
+            <p class="date">${current_library[album][0].date}</p>
+        </div>
+        `);
+    }
 
     return em_album;
 }
