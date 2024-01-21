@@ -344,10 +344,10 @@ function queue_album() {
 
 
 // queue album last from point
-function queue_album_from() {
+function queue_album_from(position,area) {
     let sorted_tracks = current_library[current_view_album].sort((a, b) => a.position - b.position);
     for (let i = position; i <= sorted_tracks.length; i++) {
-        eel.queue_last(sorted_tracks[track].rawr);
+        eel.queue_last(sorted_tracks[i].rawr);
     }
     get_queue();
 }

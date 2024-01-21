@@ -711,9 +711,11 @@ nav ul {
 }
 
 
-[data-grid-view="Album"] :is([data-album-release="Single"], [data-album-release="EP"], [data-album-release="B-Sides"]),
+[data-grid-view="Album"] :is([data-album-release="Single"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"]),
 [data-grid-view="Single"] :is([data-album-release="Album"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"]),
-[data-grid-view="EP"] :is([data-album-release="Single"], [data-album-release="Album"], [data-album-release="DJ Mix"])
+[data-grid-view="EP"] :is([data-album-release="Single"], [data-album-release="Album"], [data-album-release="DJ Mix"]), [data-album-release="B-Sides"],
+[data-grid-view="DJ Mix"] :is([data-album-release="Album"], [data-album-release="EP"], [data-album-release="Single"], [data-album-release="B-Sides"]),
+[data-grid-view="B-Sides"] :is([data-album-release="Single"], [data-album-release="Album"], [data-album-release="DJ Mix"],  [data-album-release="EP"])
 {
     display: none;
 }
