@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@100;200;300;400;500;600;700&display=swap');
 
 
-:root {
+body {
     --hue: var(--base-hue, 255);
     --sat: var(--saturation, 1);
     --lit: var(--lightness, 1);
@@ -77,6 +77,43 @@ button
     /* root */
     --b6: 0, 0%, 0%;
     --b7: 0, 0%, 0%;
+}
+
+[data-theme="light"]
+{
+    --font-weight: 500;
+}
+
+[data-theme="light"],
+[data-theme="light"] :is(.primary)
+{
+    /* card border */
+    --b4: var(--hue), calc(var(--sat) * 6%), 89%;
+
+    /* card */
+    --b5: 0, 0%, 100%;
+
+    /* root */
+    --b6: 0, 0%, 98%;
+    --b7: 0, 0%, 0%;
+}
+
+[data-theme="light"],
+[data-theme="light"] :is(button)
+{
+    --c1: var(--hue), calc(var(--sat) * 6%), 0%;
+    --c2: var(--hue), calc(var(--sat) * 4%), 4%;
+    --c3: var(--hue), calc(var(--sat) * 10%), 30%;
+    --ov-c1: var(--hue), calc(var(--sat) * 40%), 100%;
+
+    --l3: var(--hue), calc(var(--sat) * 50%), calc(var(--lit) * 55%);
+    --l4: var(--hue), calc(var(--sat) * 60%), calc(var(--lit) * 25%);
+
+    --l3-c: var(--hue), calc(var(--sat) * 50%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 55%);
+    --l4-c: var(--hue), calc(var(--sat) * 60%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 25%);
+
+    --h3: var(--hue), calc(var(--sat) * 50%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 80%);
+    --h4: var(--hue), calc(var(--sat) * 60%), calc(clamp(min(0.5), var(--lit), max(1.5)) * 65%);
 }
 
 /* attributes */
@@ -167,7 +204,7 @@ b, strong {
 
 
 /*     BUTTON     */
-button {
+button, .menu-option {
     --bg: hsl(var(--b4));
     --bg-hov: hsla(var(--b4), 80%);
     --bg-atv: hsla(var(--b4), 60%);
@@ -197,15 +234,15 @@ button {
     transition-duration: var(--trans);
     transition-timing-function: var(--trans-function);
 }
-button:hover {
+button:hover, .menu-option:hover {
     background-color: var(--bg-hov);
     color: var(--col-hov);
 }
-button:active {
+button:active, .menu-option:active {
     background-color: var(--bg-atv);
     transform: scale(0.98);
 }
-button:disabled {
+button:disabled, .menu-option:disabled {
     opacity: 0.5;
     pointer-events: none;
 }
@@ -464,7 +501,9 @@ footer .shuffle {
 /* loop */
 .loop:not([data-type="2"]) .once, .loop[data-type="2"] .none,
 /* theme */
-[data-theme="dark"] footer .theme .oled, [data-theme="oled"] footer .theme .dark
+[data-theme="dark"] footer .theme :is(.oled, .light),
+[data-theme="oled"] footer .theme :is(.dark, .light),
+[data-theme="light"] footer .theme :is(.dark, .oled)
 {
     display: none;
 }
@@ -511,6 +550,10 @@ footer .player-bar {
     transition-property: background-color, box-shadow;
     transition-duration: calc(var(--trans) * 7);
     transition-timing-function: var(--trans-function);
+}
+
+[data-theme="light"] .bar .fill {
+    box-shadow: 0 0 20px 4px hsla(var(--l4-c), 50%);
 }
 
 
@@ -802,4 +845,35 @@ nav ul {
 
 .back {
     width: fit-content;
+}
+
+
+
+
+/*     DROPDOWN     */
+.dropdown-content {
+    padding: 6px calc(6px - 2px);
+    width: 200px;
+}
+.menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.menu-option {
+    --bg: transparent;
+    --bg-hov: hsla(var(--b4), 60%);
+    --bg-atv: hsla(var(--b4), 80%);
+    --shadow: none;
+    box-sizing: border-box;
+}
+
+[data-theme="light"] .menu-option.light,
+[data-theme="dark"] .menu-option.dark,
+[data-theme="oled"] .menu-option.oled
+{
+    --bg: hsla(var(--l4), 20%);
+    --bg-hov: hsla(var(--l4), 40%);
+    --bg-atv: hsla(var(--l4), 60%);
 }

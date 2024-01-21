@@ -131,7 +131,8 @@
                 <i class="icon w-16 vol-1" data-lucide="volume-1"></i>
                 <i class="icon w-16 vol-2" data-lucide="volume-2"></i>
             </button>
-            <button class="theme" id="action-theme" onclick="toggle_theme()">
+            <button class="theme" id="action-theme">
+                <i class="icon w-16 light" data-lucide="sun"></i>
                 <i class="icon w-16 dark" data-lucide="moon"></i>
                 <i class="icon w-16 oled" data-lucide="moon-star" fill="currentColor"></i>
             </button>
@@ -157,9 +158,9 @@
     let loop_tip = tippy(document.getElementById('action-loop'),{
         content: 'Repeat'
     });
-    let theme_tip = tippy(document.getElementById('action-theme'),{
-        content: 'Dark theme'
-    });
+    //let theme_tip = tippy(document.getElementById('action-theme'),{
+    //    content: 'Dark theme'
+    //});
 
     let volume_tip = tippy(document.getElementById('action-volume'),{
         content: '',
@@ -167,6 +168,11 @@
         allowHTML: true
     });
     let queue_tip = tippy(document.getElementById('action-queue'),{
+        content: '',
+        interactive: true,
+        allowHTML: true
+    });
+    let theme_tip = tippy(document.getElementById('action-theme'),{
         content: '',
         interactive: true,
         allowHTML: true

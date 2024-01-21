@@ -2,12 +2,7 @@
 
 
 let theme = localStorage.getItem('saved_theme') || 'dark';
-if (theme != 'dark') document.body.setAttribute('data-theme',theme);
-
-if (theme == 'oled')
-        theme_tip.setContent('OLED theme');
-    else
-        theme_tip.setContent('Dark theme');
+save_theme(theme);
 
 
 let grid_view = 'Album';
@@ -29,10 +24,15 @@ function save_theme(new_theme) {
     localStorage.setItem('saved_theme',new_theme);
     theme = new_theme;
 
-    if (new_theme == 'oled')
-        theme_tip.setContent('OLED theme');
-    else
-        theme_tip.setContent('Dark theme');
+    theme_tip.setContent(`
+    <div class="dropdown-content">
+        <ul class="menu" data-theme="${new_theme}">
+            <li class="menu-option light" onclick="save_theme('light')">Light</li>
+            <li class="menu-option dark" onclick="save_theme('dark')">Dark</li>
+            <li class="menu-option oled" onclick="save_theme('oled')">OLED</li>
+        </ul>
+    </div>
+    `);
 }
 
 
@@ -58,8 +58,8 @@ let stocking = {
         }
     }
 };
-// 0.25s
-let stocking_timeout = 250;
+// 0.4s
+let stocking_timeout = 400;
 // 1s
 let queue_timeout = 1000;
 
