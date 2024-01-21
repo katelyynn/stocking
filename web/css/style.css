@@ -491,6 +491,18 @@ footer {
 
     flex-direction: row;
     gap: calc(var(--card-gap) * 3);
+    z-index: 1;
+}
+body:before {
+    content: '';
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, transparent 0%, hsl(var(--b6)) 100%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 footer .actions {
