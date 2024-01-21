@@ -203,6 +203,22 @@ def add_to_artists(append):
     with open('./web/js/artists.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False)
 
+@eel.expose()
+def modify_album_info(artist,album,rawr):
+    with open('./web/js/albums.json', encoding='utf-8') as f:
+        data = json.load(f)
+
+    if artist not in data:
+        data[artist] = {}
+
+    if album not in data[artist]:
+        data[artist][album] = {}
+
+    data[artist][album] = rawr
+
+    with open('./web/js/albums.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False)
+
 
 @eel.expose()
 def get_queue_length():
