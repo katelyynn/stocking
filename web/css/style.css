@@ -853,6 +853,7 @@ nav ul {
 }
 .disc-title {
     padding: 0 12px;
+    color: hsl(var(--c2));
 }
 
 .track-item .position {
