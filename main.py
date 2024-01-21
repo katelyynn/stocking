@@ -136,6 +136,10 @@ def get_artwork(rawr):
                 get_cover = f'{directory}\\artwork.png'
             elif (os.path.isfile(f'{directory}\\artwork.jpg')):
                 get_cover = f'{directory}\\artwork.jpg'
+            elif (os.path.isfile(f'{directory}\\folder.png')):
+                get_cover = f'{directory}\\folder..png'
+            elif (os.path.isfile(f'{directory}\\folder.jpg')):
+                get_cover = f'{directory}\\folder.jpg'
         else:
             get_cover = temp_artwork_get
 
