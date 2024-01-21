@@ -281,8 +281,15 @@ async function view_album(album) {
     current_album_first_track_filename = current_library[album][0].rawr;
     current_view_album = album;
 
-    for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
-        document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track],track));
+    let last_disc = -1;
+
+    for (let track in current_library[album].sort((a, b) => a.disc.localeCompare(b.disc) || a.position - b.position)) {
+        let track_disc = current_library[album][track].disc;
+        if (last_disc != track_disc) {
+            document.getElementById('album-tracklist').appendChild(create_tracklist(track_disc));
+            last_disc = track_disc;
+        }
+        document.getElementById(`album-tracklist-${track_disc}`).appendChild(create_track(current_library[album][track],track));
     }
     tippy(document.querySelectorAll('.queue-next'),{
         content: 'Queue next'
@@ -370,9 +377,9 @@ function create_track(track,index,area='tracklist',now_playing=false) {
         <button class="queue-remove" onclick="queue_remove('${index}','${area}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="minus" class="lucide lucide-minus icon w-16"><path d="M5 12h14"></path></svg>
         </button>
-        <button class="queue-next" onclick="queue_next('${index}','${area}')"><i class="icon w-16" data-lucide="list-start"></i></button>
-        <button class="queue-last" onclick="queue_last('${index}','${area}')"><i class="icon w-16" data-lucide="list-end"></i></button>
-        <button class="queue-album-from" onclick="queue_album_from('${index}','${area}')"><i class="icon w-16" data-lucide="list-plus"></i></button>
+        <button class="queue-next" onclick="queue_next('${index}','${area}')"><i class="icon w-16" data-lucide="plus"></i></button>
+        <button class="queue-last" onclick="queue_last('${index}','${area}')"><i class="icon w-16" data-lucide="chevrons-right"></i></button>
+        <button class="queue-album-from" onclick="queue_album_from('${index}','${area}')"><i class="icon w-16" data-lucide="list-end"></i></button>
     </div>
     `);
 
@@ -383,6 +390,24 @@ function create_track(track,index,area='tracklist',now_playing=false) {
         em_track.classList.add('primary');
 
     return em_track;
+}
+
+function create_tracklist(disc) {
+    let em_disc = document.createElement('div');
+    em_disc.classList.add('tracklist-container-inner');
+
+    if (disc != 0 && disc != undefined) {
+        em_disc.innerHTML = (`
+        <h3 class="disc-title">Disc ${disc}</h3>
+        <ul class="tracklist" id="album-tracklist-${disc}"></ul>
+        `);
+    } else {
+        em_disc.innerHTML = (`
+        <ul class="tracklist" id="album-tracklist-${disc}"></ul>
+        `);
+    }
+
+    return em_disc;
 }
 
 

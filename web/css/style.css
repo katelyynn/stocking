@@ -288,8 +288,15 @@ button:disabled, .menu-option:disabled {
 }
 .track-item button {
     --bg: transparent;
-    --bg-hov: hsla(var(--b3), 20%);
-    --bg-atv: hsla(var(--b3), 40%);
+    --bg-hov: hsla(var(--b3), 50%);
+    --bg-atv: hsla(var(--b3), 70%);
+    --shadow: none;
+}
+
+.artwork button {
+    --bg: hsla(var(--b4), 20%);
+    --bg-hov: hsla(var(--b4), 40%);
+    --bg-atv: hsla(var(--b4), 60%);
     --shadow: none;
 }
 
@@ -834,6 +841,18 @@ nav ul {
 }
 .track-item:hover {
     background-color: var(--bg-hov);
+}
+
+.tracklists-container, .tracklist-container-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tracklist-container-inner::marker {
+    display: none;
+}
+.disc-title {
+    padding: 0 12px;
 }
 
 .track-item .position {

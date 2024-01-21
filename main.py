@@ -173,6 +173,7 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
     elif include_album:
         return {
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
+            'disc': mb.library_get_file_tag(rawrr,MBMD_DiscNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
@@ -186,6 +187,7 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
     else:
         return {
             'position': mb.library_get_file_tag(rawrr,MBMD_TrackNo),
+            'disc': mb.library_get_file_tag(rawrr,MBMD_DiscNo),
             'title': mb.library_get_file_tag(rawrr,MBMD_TrackTitle),
             'artist': mb.library_get_file_tag(rawrr,MBMD_Artist),
             'album_artist': mb.library_get_file_tag(rawrr,MBMD_AlbumArtist),
