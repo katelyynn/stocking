@@ -2,3 +2,7 @@ chrome-win
 test.py
 web/js/artists.json
 web/js/albums.json
+web/img/artists
+
+# dont wanna risk copyright or watever :p
+web/img/stocking.ico

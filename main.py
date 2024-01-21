@@ -153,6 +153,20 @@ def get_artwork(rawr):
         print("invalid image")
         return -1
 
+@eel.expose()
+def get_artist_artwork(artist):
+    working_dir = os.getcwd()
+    if (os.path.isfile(f'{working_dir}\\web\\img\\artists\\{artist}.png')):
+        get_cover = f'{working_dir}\\web\\img\\artists\\{artist}.png'
+
+        img = Image.open(get_cover)
+        res_img = img.resize((600, 600))
+        output2 = BytesIO()
+        res_img.save(output2, format="JPEG")
+        return base64.b64encode(output2.getvalue()).decode('utf-8')
+    else:
+        return ''
+
 
 @eel.expose()
 def parse_file(rawrr,include_album=True,in_queue=-1):
