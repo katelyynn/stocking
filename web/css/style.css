@@ -82,6 +82,12 @@ button
 [data-theme="light"]
 {
     --font-weight: 500;
+
+    --card-shadow: hsla(var(--b7), 0.05) 0 2px 4px 0;
+
+    --menu-shadow: 2px 2px 24px 0 hsla(var(--b7), 0.15), 3px 6px 48px 16px hsla(var(--b7), 0.03);
+
+    --interact-shadow: hsla(var(--b7), 0.07) 0 2px 4px 0;
 }
 
 [data-theme="light"],
@@ -168,10 +174,11 @@ body {
     padding-bottom: 104px;
 
     overflow: overlay;
+    scrollbar-width: thin;
 }
 
 ::-webkit-scrollbar {
-    width: 20px;
+    width: 0;
     background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
@@ -254,6 +261,13 @@ button:disabled, .menu-option:disabled {
     --bg-hov: hsla(var(--h3), 80%);
     --bg-atv: hsla(var(--h3), 60%);
     --col: hsl(var(--ovr, var(--b7)));
+}
+
+
+.cute {
+    --padding: 2px 7px;
+    min-width: unset;
+    min-height: unset;
 }
 
 
@@ -636,7 +650,7 @@ nav:hover {
 nav .head, .head.flex {
     display: flex;
 }
-nav .head h3, .head.flex h2 {
+nav .head h3, .head.flex h1, .head.flex h2, .head.flex h3 {
     flex: 1;
 }
 nav .head button {
@@ -665,9 +679,16 @@ nav ul {
     box-shadow: var(--menu-shadow);
     width: fit-content;
     max-width: 650px !important;
+    transition-property: background-color, border, color, box-shadow, transform, visibility, opacity;
+    transition-duration: calc(var(--trans) * 7);
+    transition-timing-function: var(--trans-function);
 }
 .tippy-arrow {
     display: none;
+}
+
+.tippy-box button {
+    font-size: calc(var(--font-size) - 1px);
 }
 
 
@@ -676,6 +697,13 @@ nav ul {
     padding: 6px calc(6px - 2px);
     text-align: left;
     min-width: 450px;
+}
+.queue {
+    max-height: 80vh;
+    overflow-y: hidden;
+}
+.queue:hover {
+    overflow-y: overlay;
 }
 
 
@@ -754,11 +782,11 @@ nav ul {
 }
 
 
-[data-grid-view="Album"] :is([data-album-release="Single"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"]),
-[data-grid-view="Single"] :is([data-album-release="Album"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"]),
-[data-grid-view="EP"] :is([data-album-release="Single"], [data-album-release="Album"], [data-album-release="DJ Mix"]), [data-album-release="B-Sides"],
-[data-grid-view="DJ Mix"] :is([data-album-release="Album"], [data-album-release="EP"], [data-album-release="Single"], [data-album-release="B-Sides"]),
-[data-grid-view="B-Sides"] :is([data-album-release="Single"], [data-album-release="Album"], [data-album-release="DJ Mix"],  [data-album-release="EP"])
+[data-grid-view="Album"] :is([data-album-release="Single"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"]),
+[data-grid-view="Single"] :is([data-album-release*="Album"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"]),
+[data-grid-view="EP"] :is([data-album-release="Single"], [data-album-release*="Album"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"]),
+[data-grid-view="DJ Mix"] :is([data-album-release*="Album"], [data-album-release="EP"], [data-album-release="Single"], [data-album-release="B-Sides"], [data-album-release="Bootleg"]),
+[data-grid-view="B-Sides"] :is([data-album-release="Single"], [data-album-release*="Album"], [data-album-release="DJ Mix"],  [data-album-release="EP"])
 {
     display: none;
 }

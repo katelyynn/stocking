@@ -412,6 +412,12 @@ function queue_remove(index,area) {
     }
 }
 
+function queue_clear() {
+    eel.player_stop();
+    eel.queue_clear();
+    get_queue();
+}
+
 
 // nav
 async function list_nav() {
@@ -513,7 +519,10 @@ async function get_queue() {
 
         queue_tip.setContent(`
         <div class="queue-content">
-            <h3 class="head">Queue</h3>
+            <div class="head flex">
+                <h3>Queue</h3>
+                <button class="cute" onclick="queue_clear()">Clear</button>
+            </div>
             ${queue_element.outerHTML}
         </div>
         `);
