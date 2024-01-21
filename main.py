@@ -145,7 +145,7 @@ def get_artwork(rawr):
 
         print(get_cover)
         img = Image.open(get_cover)
-        res_img = img.resize((450, 450))
+        res_img = img.resize((600, 600))
         output2 = BytesIO()
         res_img.save(output2, format="JPEG")
         return base64.b64encode(output2.getvalue()).decode('utf-8')
