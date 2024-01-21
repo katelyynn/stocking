@@ -10,6 +10,13 @@ if (theme == 'oled')
         theme_tip.setContent('Dark theme');
 
 
+let grid_view = 'Album';
+document.getElementById('view-selector').addEventListener('change', function(grid_view_temp) {
+    grid_view = document.getElementById('view-selector').value;
+    document.getElementById('library-grid').setAttribute('data-grid-view',grid_view);
+});
+
+
 function toggle_theme() {
     if (theme == 'dark')
         save_theme('oled');
@@ -189,9 +196,10 @@ async function create_album(album) {
     let em_album = document.createElement('button');
     em_album.classList.add('album-grid-item');
     em_album.setAttribute('onclick',`view_album('${album.replaceAll(`'`,`\\'`)}')`);
+    em_album.setAttribute('data-album-release',current_library[album][0].release);
     console.log('b',this_artwork);
 
-    if (this_artwork == '' || this_artwork == 'null' || this_artwork == null) {
+    if (this_artwork == '' || this_artwork == -1 || this_artwork == null) {
         em_album.innerHTML = (`
         <div class="artwork missing">
             <i class="icon w-48" data-lucide="disc-album"></i>
@@ -222,10 +230,12 @@ async function create_album(album) {
 // artwork flow
 async function get_album_artwork(rawr,force=false,album_artist,album) {
     let cached_artwork = localStorage.getItem(`cached_cover_${album_artist}_${album}`) || '';
-    if (cached_artwork == '' || cached_artwork === null || force) {
+    if (cached_artwork == '' || force) {
         let new_artwork = await eel.get_artwork(rawr)();
-        localStorage.setItem(`cached_cover_${album_artist}_${album}`,new_artwork);
-        console.log('new',new_artwork);
+        if (new_artwork != -1) {
+            localStorage.setItem(`cached_cover_${album_artist}_${album}`,new_artwork);
+            console.log('new',new_artwork);
+        }
         return new_artwork;
     } else {
         console.log('cache',cached_artwork);
@@ -253,7 +263,7 @@ async function view_album(album) {
             let vibrant = new Vibrant(document.getElementById('artwork-big-album'));
             let swatches = vibrant.swatches();
             for (let swatch in swatches) {
-                let hsl = swatches.Vibrant.getHsl();
+                let hsl = swatches.DarkVibrant.getHsl();
                 document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
                 document.body.style.setProperty('--sat',hsl[1]);
                 //document.body.style.setProperty('--lit',hsl[2]);
@@ -272,6 +282,15 @@ async function view_album(album) {
     for (let track in current_library[album].sort((a, b) => a.position - b.position)) {
         document.getElementById('album-tracklist').appendChild(create_track(current_library[album][track],track));
     }
+    tippy(document.querySelectorAll('.queue-next'),{
+        content: 'Queue next'
+    });
+    tippy(document.querySelectorAll('.queue-last'),{
+        content: 'Queue last'
+    });
+    tippy(document.querySelectorAll('.queue-album-from'),{
+        content: 'Queue track onwards'
+    });
     lucide.createIcons();
 }
 
@@ -301,10 +320,34 @@ function play_album() {
 }
 
 
+// play album from point
+function play_album_from(position) {
+    eel.player_stop();
+    eel.queue_clear();
+
+    let sorted_tracks = current_library[current_view_album].sort((a, b) => a.position - b.position);
+    for (let i = position; i <= sorted_tracks.length; i++) {
+        eel.queue_next(sorted_tracks[track].rawr);
+    }
+    eel.player_toggle_play();
+    get_queue();
+}
+
+
 // queue album last
 function queue_album() {
     for (let track in current_library[current_view_album].sort((a, b) => a.position - b.position)) {
         eel.queue_last(current_library[current_view_album][track].rawr);
+    }
+    get_queue();
+}
+
+
+// queue album last from point
+function queue_album_from() {
+    let sorted_tracks = current_library[current_view_album].sort((a, b) => a.position - b.position);
+    for (let i = position; i <= sorted_tracks.length; i++) {
+        eel.queue_last(sorted_tracks[track].rawr);
     }
     get_queue();
 }
@@ -325,7 +368,9 @@ function create_track(track,index,area='tracklist',now_playing=false) {
         <button class="queue-remove" onclick="queue_remove('${index}','${area}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="minus" class="lucide lucide-minus icon w-16"><path d="M5 12h14"></path></svg>
         </button>
-        <button class="queue-next" onclick="queue_next('${index}','${area}')"><i class="icon w-16" data-lucide="plus"></i></button>
+        <button class="queue-next" onclick="queue_next('${index}','${area}')"><i class="icon w-16" data-lucide="list-start"></i></button>
+        <button class="queue-last" onclick="queue_last('${index}','${area}')"><i class="icon w-16" data-lucide="list-end"></i></button>
+        <button class="queue-album-from" onclick="queue_album_from('${index}','${area}')"><i class="icon w-16" data-lucide="list-plus"></i></button>
     </div>
     `);
 
@@ -349,6 +394,13 @@ function play_track(index,area) {
 function queue_next(index,area) {
     if (area == 'tracklist') {
         eel.queue_next(current_library[current_view_album][index].rawr);
+        get_queue();
+    }
+}
+
+function queue_last(index,area) {
+    if (area == 'tracklist') {
+        eel.queue_last(current_library[current_view_album][index].rawr);
         get_queue();
     }
 }

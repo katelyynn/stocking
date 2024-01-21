@@ -38,13 +38,13 @@
     </nav>
     <main class="cards">
         <section class="main cards">
-            <section class="card" id="library-grid" style="display: none">
+            <section class="card" id="library-grid" data-grid-view="Album" style="display: none">
                 <div class="head flex">
                     <h2 id="library-grid-title"></h2>
-                    <select>
-                        <option value="album">Albums</option>
-                        <option value="single">Singles</option>
-                        <option value="ep">EPs</option>
+                    <select id="view-selector">
+                        <option value="Album">Albums</option>
+                        <option value="Single">Singles</option>
+                        <option value="EP">EPs</option>
                     </select>
                 </div>
                 <div class="album-grid" id="library-grid-items"></div>

@@ -104,7 +104,7 @@ def get_artist_library(artist=''):
 
     count = 0
     for item in rawr:
-        print(count)
+        #print(count)
         album = mb.library_get_file_tag(item,MBMD_Album)
         if album not in meow:
             meow[album] = []
@@ -112,20 +112,42 @@ def get_artist_library(artist=''):
         meow[album].append(parse_file(item,False))
         count += 1
 
-    print(meow)
+    #print(meow)
     return meow
 
 
 @eel.expose()
 def get_artwork(rawr):
     try:
-        img = Image.open(mb.library_get_file_tag(rawr,MBMD_Artwork))
-        res_img = img.resize((600, 600))
+        print('')
+        # artwork embedded in file
+        temp_artwork_get = mb.library_get_file_tag(rawr,MBMD_Artwork)
+        get_cover = ''
+        #print(os.path.dirname(temp_artwork_get))
+        if (temp_artwork_get.endswith(('.mp3','.m4a','.flac','.wav','.ogg'))):
+            print('lets get tha cover ourselves')
+            directory = os.path.dirname(temp_artwork_get)
+            print(f'{directory}\\artwork.png')
+            if (os.path.isfile(f'{directory}\\cover.png')):
+                get_cover = f'{directory}\\cover.png'
+            elif (os.path.isfile(f'{directory}\\cover.jpg')):
+                get_cover = f'{directory}\\cover.jpg'
+            elif (os.path.isfile(f'{directory}\\artwork.png')):
+                get_cover = f'{directory}\\artwork.png'
+            elif (os.path.isfile(f'{directory}\\artwork.jpg')):
+                get_cover = f'{directory}\\artwork.jpg'
+        else:
+            get_cover = temp_artwork_get
+
+        print(get_cover)
+        img = Image.open(get_cover)
+        res_img = img.resize((450, 450))
         output2 = BytesIO()
         res_img.save(output2, format="JPEG")
         return base64.b64encode(output2.getvalue()).decode('utf-8')
     except:
         print("invalid image")
+        return -1
 
 
 @eel.expose()
@@ -141,7 +163,8 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr,
             'date': mb.library_get_file_tag(rawrr,MBMD_Year),
-            'length': mb.library_get_file_property(rawrr,MBFP_Duration)
+            'length': mb.library_get_file_property(rawrr,MBFP_Duration),
+            'release': mb.library_get_file_tag(rawrr,MBMD_Custom4)
         }
     elif include_album:
         return {
@@ -153,7 +176,8 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
             'album': mb.library_get_file_tag(rawrr,MBMD_Album),
             'rawr': rawrr,
             'date': mb.library_get_file_tag(rawrr,MBMD_Year),
-            'length': mb.library_get_file_property(rawrr,MBFP_Duration)
+            'length': mb.library_get_file_property(rawrr,MBFP_Duration),
+            'release': mb.library_get_file_tag(rawrr,MBMD_Custom4)
         }
     else:
         return {
@@ -164,7 +188,8 @@ def parse_file(rawrr,include_album=True,in_queue=-1):
             'guests': mb.library_get_file_tag(rawrr,MBMD_MultiArtist),
             'rawr': rawrr,
             'date': mb.library_get_file_tag(rawrr,MBMD_Year),
-            'length': mb.library_get_file_property(rawrr,MBFP_Duration)
+            'length': mb.library_get_file_property(rawrr,MBFP_Duration),
+            'release': mb.library_get_file_tag(rawrr,MBMD_Custom4)
         }
 
 

@@ -711,6 +711,14 @@ nav ul {
 }
 
 
+[data-grid-view="Album"] :is([data-album-release="Single"], [data-album-release="EP"], [data-album-release="B-Sides"]),
+[data-grid-view="Single"] :is([data-album-release="Album"], [data-album-release="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"]),
+[data-grid-view="EP"] :is([data-album-release="Single"], [data-album-release="Album"], [data-album-release="DJ Mix"])
+{
+    display: none;
+}
+
+
 
 
 /*     TRACKLIST     */
@@ -769,6 +777,13 @@ nav ul {
 
 .track-item .actions {
     display: flex;
+    gap: 4px;
+    transition-property: opacity;
+    transition-duration: var(--trans);
+    transition-timing-function: var(--trans-function);
+}
+.track-item:not(:hover) .actions {
+    opacity: 0.35;
 }
 .track-item button {
     --padding: 5px;
@@ -777,7 +792,7 @@ nav ul {
 }
 
 .tracklist .queue-remove,
-.queue .queue-next
+.queue :is(.queue-next, .queue-last, .queue-album-from)
 {
     display: none;
 }
