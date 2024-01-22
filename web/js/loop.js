@@ -192,12 +192,43 @@ async function get_library(artist) {
     //console.log(current_library);
 
     document.getElementById('library-grid-items').innerHTML = '';
+    let years = [];
 
     // show albums
     for (let album in sorted) {
-        document.getElementById('library-grid-items').appendChild(await create_album(sorted[album].name));
+        let year = new Date(sorted[album].date).getFullYear();
+        //console.log(year,typeof(year));
+        console.log(years,year,years.includes(year),year.toString(),!(years.includes(year)) && year.toString() !== 'NaN');
+        if (!(year in years) && year.toString() !== 'NaN') {
+            document.getElementById('library-grid-items').appendChild(create_album_grid(year));
+            years[year] = {
+                album: 0,
+                single: 0,
+                ep: 0,
+                dj: 0,
+                bside: 0
+            };
+        }
+        console.log(sorted[album]);
+        try { document.getElementById(`library-grid-${year}`).appendChild(await create_album(sorted[album].name)); years[year][release_format(current_library[sorted[album].name][0].release)] += 1; } catch(e) {console.error(e)};
     }
+    console.log('years',years);
     lucide.createIcons();
+
+    for (let year in years) {
+        if (years[year].album == 0) {
+            document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-album-view');
+        } else if (years[year].single == 0) {
+            document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-single-view');
+        } else if (years[year].ep == 0) {
+            document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-ep-view');
+        } else if (years[year].dj == 0) {
+            document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-dj-view');
+        } else if (years[year].bside == 0) {
+            document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-bside-view');
+        }
+    }
+
     document.getElementById('library-grid').style.removeProperty('display','none');
     document.getElementById('album').style.setProperty('display','none');
     document.getElementById('album-details').style.setProperty('display','none');
@@ -207,6 +238,32 @@ async function get_library(artist) {
     //document.body.style.removeProperty('--hue');
     //document.body.style.removeProperty('--sat');
     //document.body.style.removeProperty('--lit');
+}
+
+
+function release_format(release) {
+    if (release.includes('Album'))
+        return 'album';
+    else if (release.includes('Single'))
+        return 'single';
+    else if (release.includes('EP'))
+        return 'ep';
+    else if (release.includes('DJ Mix'))
+        return 'dj';
+    else if (release.includes('B-Sides'))
+        return 'bside';
+}
+
+
+function create_album_grid(year) {
+    let em_grid = document.createElement('div');
+    em_grid.classList.add('library-grid-inner');
+    em_grid.setAttribute('id',`library-grid-inner-${year}`);
+    em_grid.innerHTML = (`
+    <h3 class="year-title">${year}</h3>
+    <div class="album-grid" id="library-grid-${year}"></div>
+    `);
+    return em_grid;
 }
 
 

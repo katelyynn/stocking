@@ -816,6 +816,12 @@ nav ul {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
+.album-grid-container, .library-grid-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .album-grid-item {
     display: flex;
     flex-direction: column;
@@ -846,11 +852,11 @@ nav ul {
 }
 
 
-[data-grid-view="Album"] :is([data-album-release="Single"], [data-album-release*="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"]),
-[data-grid-view="Single"] :is([data-album-release*="Album"], [data-album-release*="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"], [data-album-release*="Compilation"]),
-[data-grid-view="EP"] :is([data-album-release="Single"], [data-album-release*="Album"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"], [data-album-release*="Compilation"]),
-[data-grid-view="DJ Mix"] :is([data-album-release*="Album"], [data-album-release*="EP"], [data-album-release="Single"], [data-album-release="B-Sides"], [data-album-release="Bootleg"], [data-album-release*="Compilation"]),
-[data-grid-view="B-Sides"] :is([data-album-release="Single"], [data-album-release*="Album"], [data-album-release="DJ Mix"],  [data-album-release*="EP"], [data-album-release*="Compilation"])
+[data-grid-view="Album"] :is(.hide-for-album-view, [data-album-release="Single"], [data-album-release*="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"]),
+[data-grid-view="Single"] :is(.hide-for-single-view, [data-album-release*="Album"], [data-album-release*="EP"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"], [data-album-release*="Compilation"]),
+[data-grid-view="EP"] :is(.hide-for-ep-view, [data-album-release="Single"], [data-album-release*="Album"], [data-album-release="DJ Mix"], [data-album-release="B-Sides"], [data-album-release="Bootleg"], [data-album-release*="Compilation"]),
+[data-grid-view="DJ Mix"] :is(.hide-for-dj-view, [data-album-release*="Album"], [data-album-release*="EP"], [data-album-release="Single"], [data-album-release="B-Sides"], [data-album-release="Bootleg"], [data-album-release*="Compilation"]),
+[data-grid-view="B-Sides"] :is(.hide-for-bside-view, [data-album-release="Single"], [data-album-release*="Album"], [data-album-release="DJ Mix"],  [data-album-release*="EP"], [data-album-release*="Compilation"])
 {
     display: none;
 }
