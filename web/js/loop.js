@@ -131,6 +131,13 @@ function parse_timestamp(rawr) {
     return date.getMinutes() + ':' + secs.substr(-2);
 }
 
+function parse_timestamp_2(rawr) {
+    let mins = Math.floor(rawr / 60);
+    let secs = '0' + (rawr - mins * 60);
+
+    return mins + ':' + secs.substr(-2);
+}
+
 
 // nyaa
 function parse_artists(artist,guests) {
@@ -193,6 +200,7 @@ async function get_library(artist) {
     lucide.createIcons();
     document.getElementById('library-grid').style.removeProperty('display','none');
     document.getElementById('album').style.setProperty('display','none');
+    document.getElementById('album-details').style.setProperty('display','none');
     document.getElementById('artist-artwork').style.removeProperty('display','none');
     document.getElementById('album-artwork').style.setProperty('display','none');
 
@@ -275,8 +283,12 @@ async function view_album(album) {
 
     document.getElementById('artwork-big-album').setAttribute('src',`data:image/png;base64,${await get_album_artwork(current_library[album][0].rawr,false,current_library[album][0].album_artist,album)}`);
 
+    document.getElementById('detail-release').textContent = current_library[album][0].release;
+    document.getElementById('detail-date').textContent = current_library[album][0].date;
+
     document.getElementById('library-grid').style.setProperty('display','none');
     document.getElementById('album').style.removeProperty('display','none');
+    document.getElementById('album-details').style.removeProperty('display','none');
     document.getElementById('artist-artwork').style.setProperty('display','none');
     document.getElementById('album-artwork').style.removeProperty('display','none');
 
@@ -297,6 +309,7 @@ async function view_album(album) {
     current_view_album = album;
 
     let last_disc = -1;
+    let album_length = 0;
 
     for (let track in current_library[album].sort((a, b) => a.disc.localeCompare(b.disc) || a.position - b.position)) {
         let track_disc = current_library[album][track].disc;
@@ -305,6 +318,7 @@ async function view_album(album) {
             last_disc = track_disc;
         }
         document.getElementById(`album-tracklist-${track_disc}`).appendChild(create_track(current_library[album][track],track));
+        album_length += parse_formatted_timestamp(current_library[album][track].length);
     }
     tippy(document.querySelectorAll('.queue-next'),{
         content: 'Queue next'
@@ -316,6 +330,19 @@ async function view_album(album) {
         content: 'Queue track onwards'
     });
     lucide.createIcons();
+
+    console.log('length',album_length);
+    document.getElementById('detail-length').textContent = parse_timestamp_2(album_length);
+}
+
+
+function parse_formatted_timestamp(time) {
+    let temp = time.split(':');
+
+    let mins = parseInt(temp[0]) * 60;
+    let secs = parseInt(temp[1]);
+    console.log(mins,secs,mins + secs,parse_timestamp((mins + secs) * 1000));
+    return mins + secs;
 }
 
 
@@ -323,6 +350,7 @@ async function view_album(album) {
 function exit_album() {
     document.getElementById('library-grid').style.removeProperty('display','none');
     document.getElementById('album').style.setProperty('display','none');
+    document.getElementById('album-details').style.setProperty('display','none');
     document.getElementById('artist-artwork').style.removeProperty('display','none');
     document.getElementById('album-artwork').style.setProperty('display','none');
 
