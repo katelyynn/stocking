@@ -47,7 +47,7 @@ button
 {
     --c1: var(--hue), calc(var(--sat) * 40%), 100%;
     --c2: var(--hue), calc(var(--sat) * 60%), 90%;
-    --c3: var(--hue), calc(var(--sat) * 10%), 60%;
+    --c3: var(--hue), calc(var(--sat) * 15%), 60%;
     --ov-c1: var(--c1);
 
     --l2: var(--hue), calc(var(--sat) * 50%), calc(var(--lit) * 79%);
@@ -815,7 +815,7 @@ nav ul {
 .album-grid {
     display: grid;
     gap: var(--card-gap);
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 189px));
 }
 
 .album-grid-container, .library-grid-inner {

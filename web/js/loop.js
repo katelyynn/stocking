@@ -189,7 +189,7 @@ async function get_library(artist) {
                 document.body.style.setProperty('--sat',hsl[1]);
                 //document.body.style.setProperty('--lit',hsl[2]);
             }
-        } catch(e) {}
+        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
     });
 
 
@@ -375,7 +375,7 @@ async function view_album(album) {
                 document.body.style.setProperty('--sat',hsl[1]);
                 //document.body.style.setProperty('--lit',hsl[2]);
             }
-        } catch(e) {}
+        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
     });
 
     current_album_first_track_filename = current_library[album][0].rawr;
@@ -427,14 +427,16 @@ function exit_album() {
     document.getElementById('artist-artwork').style.removeProperty('display','none');
     document.getElementById('album-artwork').style.setProperty('display','none');
 
-    let vibrant = new Vibrant(document.getElementById('artwork-big-artist'));
-    let swatches = vibrant.swatches();
-    for (let swatch in swatches) {
-        let hsl = swatches.DarkVibrant.getHsl();
-        document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
-        document.body.style.setProperty('--sat',hsl[1]);
-        //document.body.style.setProperty('--lit',hsl[2]);
-    }
+    try {
+        let vibrant = new Vibrant(document.getElementById('artwork-big-artist'));
+        let swatches = vibrant.swatches();
+        for (let swatch in swatches) {
+            let hsl = swatches.DarkVibrant.getHsl();
+            document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
+            document.body.style.setProperty('--sat',hsl[1]);
+            //document.body.style.setProperty('--lit',hsl[2]);
+        }
+    } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
 
     //document.body.style.removeProperty('--hue');
     //document.body.style.removeProperty('--sat');
