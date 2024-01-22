@@ -14,8 +14,8 @@
     <link rel="shortcut icon" type="ico" href="img/stocking.ico"/>
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script src="https://unpkg.com/showdown/dist/showdown.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" defer></script>-->
+    <script src="js/showdown.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" defer></script>-->
     <script type="text/javascript" src="/eel.js"></script>
     <script src="js/Vibrant.min.js"></script>
     <!-- icons -->
@@ -38,13 +38,15 @@
             <section class="card" id="library-grid" data-grid-view="Album" style="display: none">
                 <div class="head flex">
                     <h1 id="library-grid-title"></h1>
-                    <select id="view-selector">
-                        <option value="Album">Albums</option>
-                        <option value="Single">Singles</option>
-                        <option value="EP">EPs</option>
-                        <option value="DJ Mix">DJ Mixes</option>
-                        <option value="B-Sides">B-Sides</option>
-                    </select>
+                    <div class="selector">
+                        <select id="view-selector">
+                            <option value="Album">Albums</option>
+                            <option value="Single">Singles</option>
+                            <option value="EP">EPs</option>
+                            <option value="DJ Mix">DJ Mixes</option>
+                            <option value="B-Sides">B-Sides</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="album-grid" id="library-grid-items"></div>
             </section>
@@ -76,7 +78,7 @@
                     <button class="update" onclick="refresh_artwork()">Refresh</button>
                 </div>
             </section>
-            <section class="card" id="album-details" style="display: none">
+            <section class="card column" id="album-details" style="display: none">
                 <div class="release-details">
                     <div class="detail-row">
                         <p class="label">Release</p>

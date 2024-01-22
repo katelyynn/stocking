@@ -285,6 +285,8 @@ async function view_album(album) {
 
     document.getElementById('detail-release').textContent = current_library[album][0].release;
     document.getElementById('detail-date').textContent = current_library[album][0].date;
+    document.getElementById('detail-bio').innerHTML = '';
+    await get_artist_bio(current_library[album][0].album_artist,album);
 
     document.getElementById('library-grid').style.setProperty('display','none');
     document.getElementById('album').style.removeProperty('display','none');
@@ -495,6 +497,32 @@ function queue_clear() {
     eel.player_stop();
     eel.queue_clear();
     get_queue();
+}
+
+
+// get artist bio
+async function get_artist_bio(artist,album) {
+    $.get('js/albums.json', function(data) {
+        console.log('albums',data);
+        console.log(data[artist][album]);
+        if (artist in data)
+            if (album in data[artist])
+                parse_markdown(data[artist][album].bio);
+        else
+            return '';
+    });
+}
+
+
+function parse_markdown(text) {
+    console.log(`parsing markdown of ${text}`);
+    let conv = new showdown.Converter({
+        requireSpaceBeforeHeadingText: true,
+        simpleLineBreaks: true
+    });
+    let html = conv.makeHtml(text);
+    console.log('returning',html);
+    document.getElementById('detail-bio').innerHTML = html;
 }
 
 

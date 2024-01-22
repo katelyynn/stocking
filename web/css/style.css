@@ -255,6 +255,39 @@ button:disabled, .menu-option:disabled {
 }
 
 
+/*     HAS ICON     */
+.selector {
+    position: relative;
+}
+.selector select {
+    padding-right: calc(12px + 16px + 6px);
+}
+.selector:before {
+    content: '';
+    display: block !important;
+    mask-position: 0 0 !important;
+    right: 12px;
+    margin-top: -8px !important;
+    margin-left: unset !important;
+    width: 16px !important;
+    height: 16px !important;
+    box-shadow: unset !important;
+    position: absolute;
+    top: 50% !important;
+    background-repeat: no-repeat;
+    margin-left: unset;
+    background-image: unset !important;
+    background-color: currentColor;
+    pointer-events: none;
+    mask-image: var(--mask);
+    -webkit-mask-image: var(--mask);
+    transition-property: opacity !important;
+    transition-duration: var(--trans) !important;
+    transition-timing-function: var(--trans-function) !important;
+    --mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImhzbCgyNTUsMjAlLDkwJSkiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93biI+PHBhdGggZD0ibTYgOSA2IDYgNi02Ii8+PC9zdmc+');
+}
+
+
 /*     PRIMARY     */
 .primary {
     --bg: hsl(var(--h3));
@@ -280,7 +313,7 @@ button:disabled, .menu-option:disabled {
 
 
 /*     SIDE NAV     */
-.nav-item, footer button, .back {
+.nav-item, footer button, .back, #view-selector {
     --bg: transparent;
     --bg-hov: hsla(var(--b4), 60%);
     --bg-atv: hsla(var(--b4), 80%);
@@ -290,6 +323,12 @@ button:disabled, .menu-option:disabled {
     --bg: transparent;
     --bg-hov: hsla(var(--b3), 50%);
     --bg-atv: hsla(var(--b3), 70%);
+    --shadow: none;
+}
+[data-theme="light"] .track-item button {
+    --bg: transparent;
+    --bg-hov: hsla(var(--b3), 20%);
+    --bg-atv: hsla(var(--b3), 40%);
     --shadow: none;
 }
 
@@ -415,6 +454,12 @@ main {
     border: unset;
     border-radius: unset;
     width: var(--cards-sidebar-width);
+}
+
+.card.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
 }
 
 
@@ -957,4 +1002,15 @@ nav ul {
     --bg: hsla(var(--l4), 20%);
     --bg-hov: hsla(var(--l4), 40%);
     --bg-atv: hsla(var(--l4), 60%);
+}
+
+
+
+
+/*     MARKDOWN     */
+.md p:not(:first-child) {
+    margin-top: 6px;
+}
+.md p:not(:last-child) {
+    margin-bottom: 6px;
 }
