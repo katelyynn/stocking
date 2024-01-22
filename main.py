@@ -54,7 +54,8 @@ def get_now_playing():
                 'title': mb.get_file_tag(MBMD_TrackTitle),
                 'artist': mb.get_file_tag(MBMD_Artist),
                 'guests': mb.get_file_tag(MBMD_MultiArtist),
-                'loved': mb.get_file_tag(MBMD_RatingLove)
+                'loved': mb.get_file_tag(MBMD_RatingLove),
+                'rawr': mb.get_file_url()
             },
             'album': {
                 'title': mb.get_file_tag(MBMD_Album),

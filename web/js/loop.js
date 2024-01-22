@@ -87,6 +87,20 @@ async function retrieve_stock() {
         document.getElementById('action-love').setAttribute('data-type',stocking.file.track.loved);
     }
 
+    // if this fails, no track has been marked as playing yet
+    try {
+        let current_playing_item = document.getElementsByClassName('track-item-album-now-playing')[0];
+        if (current_playing_item.getAttribute('id') != `track-item-${stocking.file.track.rawr}`) {
+            current_playing_item.classList.remove('track-item-album-now-playing','primary');
+            current_playing_item.removeAttribute('id');
+        }
+    } catch(e) {}
+    // if this fails, either not on album page or now playing track isnt in the album
+    try {
+        // TODO: dont do this a million times, cant put it in the if check above cus that can fail so..
+        document.getElementById(`track-item-${stocking.file.track.rawr}`).classList.add('track-item-album-now-playing','primary');
+    } catch(e) {}
+
 
     // update play/pause
     document.getElementById('action-play-pause').setAttribute('data-type',stocking.status.state);
@@ -493,6 +507,9 @@ function create_track(track,index,area='tracklist',now_playing=false) {
         <button class="queue-album-from" onclick="queue_album_from('${index}','${area}')"><i class="icon w-16" data-lucide="list-end"></i></button>
     </div>
     `);
+
+    if (area == 'tracklist')
+        em_track.setAttribute('id',`track-item-${track.rawr}`);
 
     if (track.guests == '' && track.artist == track.album_artist)
         em_track.classList.add('artist-same');

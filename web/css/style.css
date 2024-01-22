@@ -428,6 +428,8 @@ main {
     overflow: hidden;
     aspect-ratio: 1 / 1;
     position: relative;
+    background-color: hsl(var(--b5));
+    border-radius: var(--card-radius);
 }
 .card.artwork .overlay {
     position: absolute;
