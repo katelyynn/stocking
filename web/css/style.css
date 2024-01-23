@@ -541,6 +541,8 @@ footer {
     margin-left: auto;
     margin-right: auto;
 
+    background-color: hsla(var(--b5), 90%);
+    backdrop-filter: blur(10px) saturate(120%);
     box-shadow: var(--menu-shadow);
 
     flex-direction: row;

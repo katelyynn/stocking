@@ -176,23 +176,6 @@ async function get_library(artist) {
     artist = artist.replaceAll('�','');
 
 
-    document.getElementById('library-grid-title').textContent = artist;
-    document.getElementById('artwork-big-artist').setAttribute('src',`data:image/png;base64,${await eel.get_artist_artwork(`${artist}`)()}`);
-
-    document.getElementById('artwork-big-artist').addEventListener('load',function() {
-        try {
-            let vibrant = new Vibrant(document.getElementById('artwork-big-artist'));
-            let swatches = vibrant.swatches();
-            for (let swatch in swatches) {
-                let hsl = swatches.DarkVibrant.getHsl();
-                document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
-                document.body.style.setProperty('--sat',hsl[1]);
-                //document.body.style.setProperty('--lit',hsl[2]);
-            }
-        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
-    });
-
-
     current_library = await eel.get_artist_library(artist)();
     //console.log(current_library);
 
@@ -249,9 +232,39 @@ async function get_library(artist) {
     document.getElementById('artist-artwork').style.removeProperty('display','none');
     document.getElementById('album-artwork').style.setProperty('display','none');
 
+    document.getElementById('library-grid-title').textContent = artist;
+    document.getElementById('artwork-big-artist').setAttribute('src',`data:image/png;base64,${await eel.get_artist_artwork(`${artist}`)()}`);
+
+    document.getElementById('artwork-big-artist').addEventListener('load',function() {
+        try {
+            let vibrant = new Vibrant(document.getElementById('artwork-big-artist'));
+            let swatches = vibrant.swatches();
+            for (let swatch in swatches) {
+                let hsl = swatches.DarkVibrant.getHsl();
+                document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
+                document.body.style.setProperty('--sat',hsl[1]);
+                //document.body.style.setProperty('--lit',hsl[2]);
+            }
+        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
+    });
+
     //document.body.style.removeProperty('--hue');
     //document.body.style.removeProperty('--sat');
     //document.body.style.removeProperty('--lit');
+}
+
+
+async function get_library_data(artist, force=false) {
+    let cached = localStorage.getItem(`cached_artist_${artist}`) || '';
+    if (cached == '' || force) {
+        console.log('!!!! getting new data');
+        let new_data = await eel.get_artist_library(artist)();
+        localStorage.setItem(`cached_artist_${artist}`,JSON.stringify(new_data));
+        return new_data;
+    } else {
+        console.log('!!!! getting cached');
+        return JSON.parse(cached);
+    }
 }
 
 
@@ -365,19 +378,6 @@ async function view_album(album) {
     document.getElementById('artist-artwork').style.setProperty('display','none');
     document.getElementById('album-artwork').style.removeProperty('display','none');
 
-    document.getElementById('artwork-big-album').addEventListener('load',function() {
-        try {
-            let vibrant = new Vibrant(document.getElementById('artwork-big-album'));
-            let swatches = vibrant.swatches();
-            for (let swatch in swatches) {
-                let hsl = swatches.DarkVibrant.getHsl();
-                document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
-                document.body.style.setProperty('--sat',hsl[1]);
-                //document.body.style.setProperty('--lit',hsl[2]);
-            }
-        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
-    });
-
     current_album_first_track_filename = current_library[album][0].rawr;
     current_view_album = album;
 
@@ -406,6 +406,19 @@ async function view_album(album) {
 
     console.log('length',album_length);
     document.getElementById('detail-length').textContent = parse_timestamp_2(album_length);
+
+    document.getElementById('artwork-big-album').addEventListener('load',function() {
+        try {
+            let vibrant = new Vibrant(document.getElementById('artwork-big-album'));
+            let swatches = vibrant.swatches();
+            for (let swatch in swatches) {
+                let hsl = swatches.DarkVibrant.getHsl();
+                document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
+                document.body.style.setProperty('--sat',hsl[1]);
+                //document.body.style.setProperty('--lit',hsl[2]);
+            }
+        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
+    });
 }
 
 
