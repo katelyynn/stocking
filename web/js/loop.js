@@ -213,17 +213,16 @@ async function get_library(artist) {
     lucide.createIcons();
 
     for (let year in years) {
-        if (years[year].album == 0) {
+        if (years[year].album == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-album-view');
-        } else if (years[year].single == 0) {
+        if (years[year].single == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-single-view');
-        } else if (years[year].ep == 0) {
+        if (years[year].ep == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-ep-view');
-        } else if (years[year].dj == 0) {
+        if (years[year].dj == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-dj-view');
-        } else if (years[year].bside == 0) {
+        if (years[year].bside == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-bside-view');
-        }
     }
 
     document.getElementById('library-grid').style.removeProperty('display','none');
@@ -243,7 +242,7 @@ async function get_library(artist) {
                 let hsl = swatches.DarkVibrant.getHsl();
                 document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
                 document.body.style.setProperty('--sat',hsl[1]);
-                //document.body.style.setProperty('--lit',hsl[2]);
+                document.body.style.setProperty('--lit',clamp_lit(Math.round(hsl[0] * 360),hsl[2]));
             }
         } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
     });
@@ -251,6 +250,13 @@ async function get_library(artist) {
     //document.body.style.removeProperty('--hue');
     //document.body.style.removeProperty('--sat');
     //document.body.style.removeProperty('--lit');
+}
+
+
+function clamp_lit(hue,lit) {
+    if (lit <= 0.65) lit = 0.65;
+    if (hue >= 210 && hue <= 260 && lit <= 0.65) lit = 0.8;
+    return lit;
 }
 
 
@@ -415,7 +421,7 @@ async function view_album(album) {
                 let hsl = swatches.DarkVibrant.getHsl();
                 document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
                 document.body.style.setProperty('--sat',hsl[1]);
-                //document.body.style.setProperty('--lit',hsl[2]);
+                document.body.style.setProperty('--lit',clamp_lit(Math.round(hsl[0] * 360),hsl[2]));
             }
         } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
     });
@@ -447,9 +453,9 @@ function exit_album() {
             let hsl = swatches.DarkVibrant.getHsl();
             document.body.style.setProperty('--hue',Math.round(hsl[0] * 360));
             document.body.style.setProperty('--sat',hsl[1]);
-            //document.body.style.setProperty('--lit',hsl[2]);
-        }
-    } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
+            document.body.style.setProperty('--lit',clamp_lit(Math.round(hsl[0] * 360),hsl[2]));
+            }
+        } catch(e) { document.body.style.setProperty('--hue','0'); document.body.style.setProperty('--sat','0'); }
 
     //document.body.style.removeProperty('--hue');
     //document.body.style.removeProperty('--sat');

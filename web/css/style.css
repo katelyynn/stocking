@@ -938,6 +938,24 @@ nav ul {
     color: hsl(var(--c3));
 }
 
+.track-item.primary .position {
+    color: transparent;
+    position: relative;
+}
+.track-item.primary .position:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    --mask: url('../img/playing.gif');
+    mask-image: var(--mask);
+    -webkit-mask-image: var(--mask);
+    background-color: hsl(var(--c2));
+}
+
 .track-item .details {
     display: flex;
     flex-direction: column;
