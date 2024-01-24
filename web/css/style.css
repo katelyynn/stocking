@@ -482,6 +482,7 @@ h1 {
     line-height: 30px;
     font-weight: 600;
     color: hsl(var(--c1));
+    font-feature-settings: 'salt';
 }
 h2 {
     font-size: 20px;
