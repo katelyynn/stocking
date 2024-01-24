@@ -176,6 +176,15 @@ body {
     overflow: overlay;
     scrollbar-width: thin;
 }
+body:after {
+    content: '';
+    inset: 0;
+    position: fixed;
+    z-index: 100000000000;
+    opacity: 0.23;
+    pointer-events: none;
+    background-image: url('../img/noise.png');
+}
 
 ::-webkit-scrollbar {
     width: 0;
@@ -934,7 +943,7 @@ nav ul {
 
 .track-item .position {
     text-align: right;
-    min-width: 24px;
+    min-width: 20px;
     color: hsl(var(--c3));
 }
 
