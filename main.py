@@ -36,7 +36,9 @@ def get_now_playing():
     if last_known_artwork != temp_artwork:
         try:
             img = Image.open(temp_artwork)
-            res_img = img.resize((400, 400))
+            res_img = img.resize((300, 300))
+            if res_img.mode in ('RGBA', 'P'):
+                res_img = res_img.convert('RGB')
             output = BytesIO()
             res_img.save(output, format="JPEG")
 
@@ -147,6 +149,8 @@ def get_artwork(rawr):
         print(get_cover)
         img = Image.open(get_cover)
         res_img = img.resize((600, 600))
+        if res_img.mode in ('RGBA', 'P'):
+            res_img = res_img.convert('RGB')
         output2 = BytesIO()
         res_img.save(output2, format="JPEG")
         return base64.b64encode(output2.getvalue()).decode('utf-8')
