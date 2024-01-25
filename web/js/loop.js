@@ -203,7 +203,8 @@ async function get_library(artist) {
                 single: 0,
                 ep: 0,
                 dj: 0,
-                bside: 0
+                bside: 0,
+                compilation: 0
             };
         }
         console.log(sorted[album]);
@@ -213,7 +214,7 @@ async function get_library(artist) {
     lucide.createIcons();
 
     for (let year in years) {
-        if (years[year].album == 0)
+        if (years[year].album == 0 && years[year].compilation == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-album-view');
         if (years[year].single == 0)
             document.getElementById(`library-grid-inner-${year}`).classList.add('hide-for-single-view');
@@ -285,6 +286,8 @@ function release_format(release) {
         return 'dj';
     else if (release.includes('B-Sides'))
         return 'bside';
+    else if (release.includes('Compilation'))
+        return 'compilation';
 }
 
 
